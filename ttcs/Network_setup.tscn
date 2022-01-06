@@ -1,0 +1,136 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://hinhnennetwork.jpg" type="Texture" id=2]
+[ext_resource path="res://Network_setup.gd" type="Script" id=3]
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/Cucho Bold.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://UI.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 4 )
+
+[node name="Network_setup" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Multiplayer_configure" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="backgroud2" type="Sprite" parent="Multiplayer_configure"]
+position = Vector2( 320.5, 160.75 )
+scale = Vector2( 0.312988, 0.263569 )
+texture = ExtResource( 2 )
+
+[node name="Create_server" type="Button" parent="Multiplayer_configure"]
+anchor_left = 0.323
+anchor_top = 0.437
+anchor_right = 0.677
+anchor_bottom = 0.562
+margin_left = -0.220001
+margin_top = 0.160004
+margin_right = 0.219971
+margin_bottom = 0.159988
+custom_fonts/font = SubResource( 1 )
+text = "Create server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="join_server" type="Button" parent="Multiplayer_configure"]
+anchor_left = 0.323
+anchor_top = 0.625
+anchor_right = 0.677
+anchor_bottom = 0.75
+margin_left = -0.220001
+margin_right = 0.219971
+margin_bottom = -1.52588e-05
+custom_fonts/font = SubResource( 1 )
+text = "Join server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Username_text_edit" type="LineEdit" parent="Multiplayer_configure"]
+anchor_left = 0.227
+anchor_top = 0.219
+anchor_right = 0.773
+anchor_bottom = 0.341
+margin_left = -0.280014
+margin_top = -0.0800018
+margin_right = 0.279968
+margin_bottom = -0.12001
+custom_fonts/font = SubResource( 2 )
+placeholder_text = "Username"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 5 )
+
+[node name="Start_game" type="Button" parent="UI"]
+anchor_right = 0.25
+anchor_bottom = 0.109
+margin_right = -148.0
+margin_bottom = -14.88
+custom_fonts/font = SubResource( 3 )
+text = "Start game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Device_ip_address" type="Label" parent="UI"]
+anchor_top = 0.953
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.039978
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spawn_locations" type="Node" parent="."]
+
+[node name="1" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 87, 81 )
+
+[node name="2" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 512, 227 )
+
+[node name="3" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 516, 82 )
+
+[node name="4" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 84, 229 )
+
+[node name="5" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 312, 227 )
+
+[node name="6" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 312, 77 )
+
+[connection signal="pressed" from="Multiplayer_configure/Create_server" to="." method="_on_Create_server_pressed"]
+[connection signal="pressed" from="Multiplayer_configure/join_server" to="." method="_on_join_server_pressed"]
+[connection signal="pressed" from="UI/Start_game" to="." method="_on_Start_game_pressed"]

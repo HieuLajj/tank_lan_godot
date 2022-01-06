@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://thuocno/Grass.png" type="Texture" id=1]
+
+[node name="conho" type="Area2D"]
+z_index = -1
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -9.53674e-07, 2.38419e-07 )
+scale = Vector2( 1.28125, 1.21875 )
+texture = ExtResource( 1 )

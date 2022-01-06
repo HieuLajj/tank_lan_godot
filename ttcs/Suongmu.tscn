@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Suongmu.gdshader" type="Shader" id=2]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 2 )
+shader_param/color = Vector3( 0.35, 0.48, 0.95 )
+shader_param/OCTAVES = 4
+
+[node name="Suongmu" type="Area2D"]
+
+[node name="Icon" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 5, -2 )
+scale = Vector2( 44.4417, 30.9453 )
+texture = ExtResource( 1 )

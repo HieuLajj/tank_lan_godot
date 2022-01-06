@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://plant repack.png" type="Texture" id=1]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 61.0456, -8.73159, 133.348, 138.655 )
+
+[node name="caydao" type="Area2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -5, -74 )
+scale = Vector2( 1.27444, 1.28986 )
+texture = SubResource( 1 )

@@ -1,0 +1,204 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/Pony.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://background3.jpg" type="Texture" id=2]
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://Server_listener.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Server_browser.gd" type="Script" id=5]
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/Cucho Bold.otf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+outline_size = 2
+outline_color = Color( 0.74902, 0.12549, 0.290196, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+outline_size = 3
+outline_color = Color( 0.133333, 0.286275, 0.792157, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationPlayer:root_node")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ NodePath("..") ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "Serching for servers." ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "serch"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "Serching for servers", "Serching for servers.", "Serching for servers..", "Serching for servers...", "Serching for servers.", "Serching for servers..", "Serching for servers...", "Serching for servers.", "Serching for servers..", "Serching for servers...", "Serching for servers." ]
+}
+
+[node name="Server_browser" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background3" type="Sprite" parent="."]
+position = Vector2( 320.5, 161 )
+scale = Vector2( 0.332812, 0.268333 )
+texture = ExtResource( 2 )
+
+[node name="Background_panel" type="Panel" parent="."]
+anchor_left = 0.094
+anchor_top = 0.194
+anchor_right = 0.911
+anchor_bottom = 0.944
+margin_left = -0.160004
+margin_top = -0.0800018
+margin_right = -0.0400391
+margin_bottom = -0.0800171
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background4" type="Sprite" parent="Background_panel"]
+position = Vector2( 261.5, 118.5 )
+scale = Vector2( 0.272396, 0.200833 )
+texture = ExtResource( 2 )
+
+[node name="Manual_setup" type="Button" parent="Background_panel"]
+anchor_left = 0.753
+anchor_top = 0.804
+anchor_right = 0.981
+anchor_bottom = 0.958
+margin_left = 0.181
+margin_top = 0.0399933
+margin_right = -0.0630493
+margin_bottom = 0.0799866
+custom_fonts/font = SubResource( 1 )
+text = "Manual setup"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Go_back" type="Button" parent="Background_panel"]
+anchor_left = 0.019
+anchor_top = 0.804
+anchor_right = 0.247
+anchor_bottom = 0.958
+margin_left = 0.0629997
+margin_top = 0.0399933
+margin_right = -0.181
+margin_bottom = 0.0799866
+custom_fonts/font = SubResource( 1 )
+text = "Go back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Server_ip_text_edit" type="LineEdit" parent="Background_panel"]
+anchor_left = 0.304
+anchor_top = 0.229
+anchor_right = 0.69
+anchor_bottom = 0.357
+margin_left = 0.00799561
+margin_top = 0.0399971
+margin_right = 0.129974
+margin_bottom = 1.31999
+rect_scale = Vector2( 1, 0.96 )
+custom_fonts/font = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Type_in_server_ip" type="Label" parent="Background_panel/Server_ip_text_edit"]
+anchor_left = 0.104
+anchor_top = -0.814
+anchor_right = 0.906
+margin_left = -0.00800133
+margin_top = 0.00633621
+margin_right = -0.0120087
+margin_bottom = -0.0416641
+custom_fonts/font = SubResource( 2 )
+text = "ip address input box"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="join_server" type="Button" parent="Background_panel/Server_ip_text_edit"]
+anchor_left = 0.203
+anchor_top = 1.66
+anchor_right = 0.812
+anchor_bottom = 2.848
+margin_left = -0.00600052
+margin_top = 0.00499725
+margin_right = -0.0240021
+margin_bottom = -0.0110016
+custom_fonts/font = SubResource( 1 )
+text = "Join server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background_panel"]
+anchor_right = 0.996
+anchor_bottom = 0.792
+margin_top = 1.0
+margin_right = 0.09198
+margin_bottom = -0.0800171
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background_panel/VBoxContainer"]
+margin_right = 521.0
+margin_bottom = 29.0
+custom_fonts/font = SubResource( 3 )
+text = "Serching for servers."
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background_panel/VBoxContainer/Label"]
+autoplay = "serch"
+anims/RESET = SubResource( 4 )
+anims/serch = SubResource( 5 )
+
+[node name="Server_listener" parent="." instance=ExtResource( 4 )]
+
+[connection signal="pressed" from="Background_panel/Manual_setup" to="." method="_on_Manual_setup_pressed"]
+[connection signal="pressed" from="Background_panel/Go_back" to="." method="_on_Go_back_pressed"]
+[connection signal="pressed" from="Background_panel/Server_ip_text_edit/join_server" to="." method="_on_join_server_pressed"]
+[connection signal="new_server" from="Server_listener" to="." method="_on_Server_listener_new_server"]
+[connection signal="remove_server" from="Server_listener" to="." method="_on_Server_listener_remove_server"]

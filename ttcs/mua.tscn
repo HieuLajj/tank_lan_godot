@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 400, 1 )
+flag_disable_z = true
+spread = 5.0
+gravity = Vector3( 30, 0, 0 )
+initial_velocity = 600.0
+angular_velocity = -60.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 40.0
+tangential_accel_random = 1.0
+angle = 260.0
+scale = 5.0
+scale_random = 0.3
+color = Color( 0.137255, 0.109804, 0.960784, 1 )
+
+[node name="mua" type="Area2D"]
+position = Vector2( -13, -7 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+use_parent_material = true
+position = Vector2( 13, 14 )
+scale = Vector2( 1.3319, 0.954397 )
+amount = 240
+lifetime = 4.0
+process_material = SubResource( 1 )

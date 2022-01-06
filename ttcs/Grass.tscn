@@ -1,0 +1,90 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://grass.png" type="Texture" id=1]
+[ext_resource path="res://Grass.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 4.9999
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 84, 84 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 84, 0, 84, 84 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 168, 0, 84, 84 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 252, 0, 84, 84 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 84, 84, 84 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 84, 84, 84, 84 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 168, 84, 84, 84 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "grow",
+"speed": 5.0
+} ]
+
+[sub_resource type="Shader" id=11]
+code = "shader_type canvas_item;
+
+uniform float offset = 0.5;
+
+void vertex() {
+	VERTEX.x += cos((TIME + offset) * 0.5) * (VERTEX.y - 38.0) * 0.1;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
+shader_param/offset = 0.5
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 269.501, 108.867, 55.091, 62.8503 )
+
+[node name="Grass" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 1.76, 0.160001 )
+shape = SubResource( 1 )
+
+[node name="Growing" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -37 )
+frames = SubResource( 9 )
+animation = "grow"
+
+[node name="Grown" type="Sprite" parent="."]
+material = SubResource( 12 )
+position = Vector2( 3, -26 )
+texture = SubResource( 10 )
+
+[connection signal="body_entered" from="." to="." method="_on_Grass_body_entered"]
+[connection signal="animation_finished" from="Growing" to="." method="_on_Growing_animation_finished"]

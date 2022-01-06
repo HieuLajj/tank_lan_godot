@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Slide (6).png" type="Texture" id=1]
+
+[node name="noel" type="Area2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 8, -16 )
+scale = Vector2( 0.0634368, 0.0610374 )
+texture = ExtResource( 1 )
