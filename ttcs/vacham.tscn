@@ -78,7 +78,7 @@ animations = [ {
 
 [node name="vacham" type="AnimatedSprite"]
 frames = SubResource( 14 )
-frame = 2
+frame = 8
 playing = true
 script = ExtResource( 2 )
 

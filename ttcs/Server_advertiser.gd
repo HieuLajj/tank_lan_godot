@@ -8,8 +8,6 @@ var socket_udp
 var broadcast_timer = Timer.new()
 
 var broadcast_port = Network.DEFAULT_PORT
-func _ready():
-	print("ocole")
 
 func _enter_tree():
 	print("google server_advertisier")

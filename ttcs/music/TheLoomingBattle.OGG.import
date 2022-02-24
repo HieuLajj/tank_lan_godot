@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/TheLoomingBattle.OGG-b44121162d86c98f1e1e7c88dc7a8d91.oggstr"
+
+[deps]
+
+source_file="res://music/TheLoomingBattle.OGG"
+dest_files=[ "res://.import/TheLoomingBattle.OGG-b44121162d86c98f1e1e7c88dc7a8d91.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://mapPack/flappybird/rockSnow.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.5, 133 )
+
+[node name="Wall" type="Area2D" groups=["tuong"]]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -7, 134 )
+scale = Vector2( 0.626464, 1.12098 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.5, 133 )
+shape = SubResource( 1 )

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/DeathFlash.ogg-117ead81e3d90a0550d9ae22d049b4e3.oggstr"
+
+[deps]
+
+source_file="res://music/DeathFlash.ogg"
+dest_files=[ "res://.import/DeathFlash.ogg-117ead81e3d90a0550d9ae22d049b4e3.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

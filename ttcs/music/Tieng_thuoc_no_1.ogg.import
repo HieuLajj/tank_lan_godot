@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Tieng_thuoc_no_1.ogg-57e3c6f49d64302f3e84a78da95167c3.oggstr"
+
+[deps]
+
+source_file="res://music/Tieng_thuoc_no_1.ogg"
+dest_files=[ "res://.import/Tieng_thuoc_no_1.ogg-57e3c6f49d64302f3e84a78da95167c3.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

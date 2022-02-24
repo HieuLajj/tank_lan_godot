@@ -1,0 +1,295 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://mapPack/brickfloor.png" type="Texture" id=1]
+[ext_resource path="res://minigame/bombminigame.gd" type="Script" id=2]
+[ext_resource path="res://Winner.gd" type="Script" id=3]
+[ext_resource path="res://music/round_end.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Cameramapcuoi.gd" type="Script" id=5]
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://Game_UI3.gd" type="Script" id=7]
+[ext_resource path="res://minigame/rock.tscn" type="PackedScene" id=8]
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 0, 0, 48, 0, 48, 48, 0, 48 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "brickfloor.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 48, 48 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 4 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="DynamicFont" id=5]
+size = 39
+outline_size = 4
+outline_color = Color( 0.0196078, 0.0196078, 0.0196078, 1 )
+font_data = ExtResource( 6 )
+
+[node name="bombminigame" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = -99
+tile_set = SubResource( 2 )
+cell_size = Vector2( 48, 48 )
+format = 1
+tile_data = PoolIntArray( -393228, 0, 0, -393227, 0, 0, -393226, 0, 0, -393225, 0, 0, -393224, 0, 0, -393223, 0, 0, -393222, 0, 0, -393221, 0, 0, -393220, 0, 0, -393219, 0, 0, -393218, 0, 0, -393217, 0, 0, -458752, 0, 0, -458751, 0, 0, -458750, 0, 0, -458749, 0, 0, -458748, 0, 0, -458747, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458743, 0, 0, -458742, 0, 0, -458741, 0, 0, -327692, 0, 0, -327689, 0, 0, -327687, 0, 0, -327685, 0, 0, -393213, 0, 0, -393209, 0, 0, -393208, 0, 0, -393205, 0, 0, -262156, 0, 0, -262147, 0, 0, -262145, 0, 0, -327679, 0, 0, -327673, 0, 0, -327669, 0, 0, -196620, 0, 0, -196619, 0, 0, -196617, 0, 0, -196615, 0, 0, -196614, 0, 0, -196613, 0, 0, -196611, 0, 0, -262141, 0, 0, -262140, 0, 0, -262139, 0, 0, -262135, 0, 0, -262133, 0, 0, -131084, 0, 0, -131075, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -196601, 0, 0, -196599, 0, 0, -196597, 0, 0, -65548, 0, 0, -65547, 0, 0, -65545, 0, 0, -65543, 0, 0, -65541, 0, 0, -131069, 0, 0, -131065, 0, 0, -131061, 0, 0, -12, 0, 0, -3, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65533, 0, 0, -65532, 0, 0, -65530, 0, 0, -65529, 0, 0, -65527, 0, 0, -65525, 0, 0, 65524, 0, 0, 65527, 0, 0, 65528, 0, 0, 65529, 0, 0, 65531, 0, 0, 3, 0, 0, 11, 0, 0, 131060, 0, 0, 131061, 0, 0, 131067, 0, 0, 131069, 0, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65545, 0, 0, 65547, 0, 0, 196596, 0, 0, 196599, 0, 0, 196601, 0, 0, 196603, 0, 0, 131075, 0, 0, 131078, 0, 0, 131079, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 262132, 0, 0, 262133, 0, 0, 262137, 0, 0, 262141, 0, 0, 262142, 0, 0, 196608, 0, 0, 196610, 0, 0, 196611, 0, 0, 196619, 0, 0, 327668, 0, 0, 327671, 0, 0, 327673, 0, 0, 327675, 0, 0, 327677, 0, 0, 262149, 0, 0, 262152, 0, 0, 262155, 0, 0, 393204, 0, 0, 327680, 0, 0, 327682, 0, 0, 327685, 0, 0, 327686, 0, 0, 327691, 0, 0, 458740, 0, 0, 458741, 0, 0, 458742, 0, 0, 458743, 0, 0, 458744, 0, 0, 458745, 0, 0, 458746, 0, 0, 458747, 0, 0, 458748, 0, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0 )
+
+[node name="Cameramapcuoi" type="Camera2D" parent="."]
+position = Vector2( 0, -1 )
+current = true
+script = ExtResource( 5 )
+
+[node name="Spawn_locations" type="Node" parent="."]
+
+[node name="1" type="Position2D" parent="Spawn_locations"]
+position = Vector2( -494, -243 )
+
+[node name="2" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 441, -242 )
+
+[node name="3" type="Position2D" parent="Spawn_locations"]
+position = Vector2( -486, 248 )
+
+[node name="4" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 462, 247 )
+
+[node name="5" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 456, -243 )
+
+[node name="6" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 6, 5 )
+
+[node name="rocks" type="Node2D" parent="."]
+
+[node name="rock" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -457, -170 )
+
+[node name="rock2" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -408, -214 )
+
+[node name="rock3" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -455, -73 )
+
+[node name="rock4" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -455, 69 )
+
+[node name="rock5" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -455, -24 )
+
+[node name="rock6" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -359, -26 )
+
+[node name="rock7" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -360, -75 )
+
+[node name="rock8" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -264, -116 )
+
+[node name="rock9" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -313, -119 )
+
+[node name="rock10" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -310, -215 )
+
+[node name="rock11" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -358, -168 )
+
+[node name="rock12" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -170, -213 )
+
+[node name="rock13" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -165, -265 )
+
+[node name="rock14" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -116, -262 )
+
+[node name="rock15" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -458, 123 )
+
+[node name="rock16" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -410, 169 )
+
+[node name="rock17" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -406, 268 )
+
+[node name="rock18" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -357, 218 )
+
+[node name="rock19" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -361, 78 )
+
+[node name="rock20" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 360, -166 )
+
+[node name="rock21" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 405, -168 )
+
+[node name="rock22" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 456, 24 )
+
+[node name="rock23" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 456, -72 )
+
+[node name="rock24" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 505, -72 )
+
+[node name="rock25" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 409, -70 )
+
+[node name="rock26" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 363, 69 )
+
+[node name="rock27" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 310, 24 )
+
+[node name="rock28" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 456, 171 )
+
+[node name="rock29" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 504, 171 )
+
+[node name="rock30" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 363, 259 )
+
+[node name="rock31" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 213, 222 )
+
+[node name="rock32" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 165, 216 )
+
+[node name="rock33" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 219, 168 )
+
+[node name="rock34" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 264, 168 )
+
+[node name="rock35" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 360, 168 )
+
+[node name="rock36" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 313, 168 )
+
+[node name="rock37" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 166, 72 )
+
+[node name="rock38" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 119, 24 )
+
+[node name="rock39" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -25, 125 )
+
+[node name="rock40" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -265, 262 )
+
+[node name="rock41" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -265, 164 )
+
+[node name="rock42" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -270, 78 )
+
+[node name="rock43" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 23, -258 )
+
+[node name="rock44" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 23, -171 )
+
+[node name="rock45" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -69, -171 )
+
+[node name="rock46" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -169, -73 )
+
+[node name="rock47" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 312, -169 )
+
+[node name="rock48" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -24, 23 )
+
+[node name="rock49" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -169, 261 )
+
+[node name="rock50" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -166, 119 )
+
+[node name="rock51" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -120, 24 )
+
+[node name="rock52" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -73, -73 )
+
+[node name="rock53" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 20, -72 )
+
+[node name="rock54" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 117, -72 )
+
+[node name="rock55" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 71, 217 )
+
+[node name="rock56" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( -25, 216 )
+
+[node name="rock57" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 265, 69 )
+
+[node name="rock58" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 216, -120 )
+
+[node name="rock59" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 217, -217 )
+
+[node name="rock60" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 166, -217 )
+
+[node name="rock61" parent="rocks" instance=ExtResource( 8 )]
+position = Vector2( 119, -169 )
+
+[node name="Game_UI3" type="CanvasLayer" parent="."]
+script = ExtResource( 7 )
+
+[node name="winnermusic" type="AudioStreamPlayer" parent="Game_UI3"]
+stream = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="Game_UI3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Winner" type="Label" parent="Game_UI3/Control"]
+anchor_top = 0.478
+anchor_right = 1.0
+anchor_bottom = 0.719
+margin_top = 0.0399933
+margin_bottom = -63.08
+custom_fonts/font = SubResource( 5 )
+text = "Good lucky !
+"
+align = 1
+valign = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Win_timer" type="Timer" parent="Game_UI3/Control/Winner"]
+
+[connection signal="timeout" from="Game_UI3/Control/Winner/Win_timer" to="Game_UI3/Control/Winner" method="_on_Win_timer_timeout"]

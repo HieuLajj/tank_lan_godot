@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/trung.ogg-7256c4977f407e187ebc035b35fd7fdb.oggstr"
+
+[deps]
+
+source_file="res://music/trung.ogg"
+dest_files=[ "res://.import/trung.ogg-7256c4977f407e187ebc035b35fd7fdb.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

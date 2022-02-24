@@ -33,10 +33,15 @@ func _process(delta):
 			if $Timer.time_left ==0:
 				trangthai =chuyendoi_trangthai([DUNGYEN,LANGTHANG])
 				$Timer.start()
+			if $audio4.playing == true:
+				$audio4.playing = false
 		TANCONG:
 			if tim_kethu() == true:
 				if global_position.distance_to(danhsach_muctieu[0].global_position) < 400 :
 					anim_play.travel("attack")
+				#	$audio4.play()
+					if $audio4.playing == false:
+						$audio4.play()
 					huong = global_position.direction_to(danhsach_muctieu[0].global_position)
 				else:
 					trangthai = DUNGYEN
@@ -52,15 +57,21 @@ func _process(delta):
 			if global_position.distance_to(vitri_muctieu) <5:
 				trangthai =chuyendoi_trangthai([DUNGYEN,LANGTHANG])
 				$Timer.start()
+			if $audio4.playing == true:
+				$audio4.playing = false
 
 func _physics_process(delta):
 	var chuyenhuong 
+	
+	chuyenhuong = Vector2(0,0)
+	
 	if get_tree().has_network_peer():
 		if is_network_master():
 			chuyenhuong = huong * tocdo * delta
 		else:
 			chuyenhuong = huong * tocdo * delta
-	move_and_collide(chuyenhuong)
+		#da sua loi o day 1 lan
+		move_and_collide(chuyenhuong)
 func tim_kethu():
 	if !danhsach_muctieu.empty():
 		trangthai = TANCONG

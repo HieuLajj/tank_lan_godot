@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Middle_age_RPG_Theme_1.ogg-eb6894a59229f973608124d6a380e4d0.oggstr"
+
+[deps]
+
+source_file="res://music/Middle_age_RPG_Theme_1.ogg"
+dest_files=[ "res://.import/Middle_age_RPG_Theme_1.ogg-eb6894a59229f973608124d6a380e4d0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

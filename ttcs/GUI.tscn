@@ -1,4 +1,4 @@
-[gd_scene load_steps=155 format=2]
+[gd_scene load_steps=156 format=2]
 
 [ext_resource path="res://giftank.jpg/c36d85a9299748749eb14a9e30826895JaU2ogwQjXnExPC8-0.jpg" type="Texture" id=1]
 [ext_resource path="res://giftank.jpg/c36d85a9299748749eb14a9e30826895JaU2ogwQjXnExPC8-18.jpg" type="Texture" id=2]
@@ -152,6 +152,7 @@
 [ext_resource path="res://button.png" type="Texture" id=150]
 [ext_resource path="res://freetank2.png" type="Texture" id=151]
 [ext_resource path="res://GUI.gd" type="Script" id=152]
+[ext_resource path="res://music/Menu.ogg" type="AudioStream" id=153]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -220,5 +221,9 @@ __meta__ = {
 position = Vector2( 316, 152 )
 scale = Vector2( 0.622683, 0.583489 )
 texture = ExtResource( 151 )
+
+[node name="AudioGUI" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 153 )
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

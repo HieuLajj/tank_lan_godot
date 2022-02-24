@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Am_thanh_nuoc_soi.ogg-1afdc0c01018a464e85d7f9f66857bff.oggstr"
+
+[deps]
+
+source_file="res://music/Am_thanh_nuoc_soi.ogg"
+dest_files=[ "res://.import/Am_thanh_nuoc_soi.ogg-1afdc0c01018a464e85d7f9f66857bff.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

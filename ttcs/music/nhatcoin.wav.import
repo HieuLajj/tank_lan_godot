@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/nhatcoin.wav-273b0d7a9282a4d8a90878bb2fd0b882.sample"
+
+[deps]
+
+source_file="res://music/nhatcoin.wav"
+dest_files=[ "res://.import/nhatcoin.wav-273b0d7a9282a4d8a90878bb2fd0b882.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

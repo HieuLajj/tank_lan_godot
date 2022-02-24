@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://mapPack/PNG/mapTile_077.png" type="Texture" id=1]
 [ext_resource path="res://mapPack/PNG/mapTile_087.png" type="Texture" id=2]
@@ -37,7 +37,12 @@
 [ext_resource path="res://caydao.tscn" type="PackedScene" id=35]
 [ext_resource path="res://tuongcay.tscn" type="PackedScene" id=36]
 [ext_resource path="res://tuongcay2.tscn" type="PackedScene" id=37]
-[ext_resource path="res://PauseMenu2.tscn" type="PackedScene" id=38]
+[ext_resource path="res://minigame/thembomb.tscn" type="PackedScene" id=38]
+[ext_resource path="res://itemhppowder/hphoimaudong.tscn" type="PackedScene" id=39]
+[ext_resource path="res://itemhppowder/tangtocdong.tscn" type="PackedScene" id=40]
+[ext_resource path="res://music/round_end.ogg" type="AudioStream" id=41]
+[ext_resource path="res://minigame/themsmoke.tscn" type="PackedScene" id=42]
+[ext_resource path="res://mapPack/vongtron.png" type="Texture" id=43]
 
 [sub_resource type="TileSet" id=1]
 0/name = "mapTile_077.png 0"
@@ -270,6 +275,38 @@ size = 39
 outline_size = 4
 outline_color = Color( 0.0196078, 0.0196078, 0.0196078, 1 )
 font_data = ExtResource( 9 )
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("vongtrontuthan:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "mms"
+length = 40.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("vongtrontuthan:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 40 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -2658,6 +2695,9 @@ script = ExtResource( 8 )
 [node name="Game_UI" type="CanvasLayer" parent="."]
 script = ExtResource( 11 )
 
+[node name="winnermusic" type="AudioStreamPlayer" parent="Game_UI"]
+stream = ExtResource( 41 )
+
 [node name="Control" type="Control" parent="Game_UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2682,14 +2722,13 @@ __meta__ = {
 }
 
 [node name="Win_timer" type="Timer" parent="Game_UI/Control/Winner"]
-wait_time = 2.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 0, -1278 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2( 24, -722 )
-polygon = PoolVector2Array( -24, 720, 2016, 720, 2024, 3288, -2088, 3272, -2096, 712, -120, 712, -256, 632, -2208, 648, -2200, 3360, 2128, 3352, 2120, 632, 40, 616 )
+polygon = PoolVector2Array( -24, 720, 2016, 720, 2024, 3288, -2088, 3272, -2096, 712, -27, 721, 28, 618, -2208, 648, -2200, 3360, 2128, 3352, 2120, 632, 40, 616 )
 
 [node name="Sheepman" parent="." instance=ExtResource( 30 )]
 position = Vector2( -1438, -1048 )
@@ -2706,7 +2745,112 @@ position = Vector2( -1062, -248 )
 [node name="Sheepman6" parent="." instance=ExtResource( 30 )]
 position = Vector2( -589, -739 )
 
-[node name="PauseMenu2" parent="." instance=ExtResource( 38 )]
-visible = false
+[node name="hphoimaudong" parent="." instance=ExtResource( 39 )]
+position = Vector2( 1320, 308 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="SpawnArea" type="ReferenceRect" parent="."]
+margin_left = 402.0
+margin_top = 5.0
+margin_right = 1513.0
+margin_bottom = 383.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tangtocdong" parent="." instance=ExtResource( 40 )]
+position = Vector2( 502, 1020 )
+
+[node name="SpawnTimer2" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="SpawnArea2" type="ReferenceRect" parent="."]
+margin_left = 1.0
+margin_top = 721.0
+margin_right = 904.0
+margin_bottom = 1224.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chuyenmap" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="itemitem" type="YSort" parent="."]
+position = Vector2( -7, 7 )
+
+[node name="thembomb" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -1196, -479 )
+
+[node name="thembomb2" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -1085, -628 )
+
+[node name="thembomb3" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -368, -498 )
+
+[node name="thembomb4" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -850, -1099 )
+
+[node name="thembomb5" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -1640, -925 )
+
+[node name="thembomb6" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -1667, -323 )
+
+[node name="thembomb7" parent="itemitem" instance=ExtResource( 38 )]
+position = Vector2( -506, -104 )
+
+[node name="itemsmoke" type="YSort" parent="."]
+
+[node name="themsmoke" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -1807, 97 )
+
+[node name="themsmoke2" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -1804, 437 )
+
+[node name="themsmoke3" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -1746, 912 )
+
+[node name="themsmoke4" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -1256, 1136 )
+
+[node name="themsmoke5" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -1170, 663 )
+
+[node name="themsmoke6" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -830, 85 )
+
+[node name="themsmoke7" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -465, 366 )
+
+[node name="themsmoke8" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -299, 1067 )
+
+[node name="themsmoke9" parent="itemsmoke" instance=ExtResource( 42 )]
+position = Vector2( -85, 555 )
+
+[node name="vongtrontuthan" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="vongtrontuthan" groups=["redzone"]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="vongtrontuthan/Area2D"]
+position = Vector2( -1948, -2245 )
+polygon = PoolVector2Array( 1, -2, 890, -432, 2075, -582, 3400, -229, 4393, 465, 4948, 1362, 5065, 2451, 4745, 3465, 3998, 4288, 2930, 4854, 1766, 4960, 506, 4704, -530, 3946, -1171, 2867, -1150, 1543, -658, 646, -44, 30, -327, -157, -1201, 833, -1492, 2514, -1237, 3550, -604, 4330, 876, 5164, 2114, 5299, 4051, 4976, 5275, 3308, 5544, 2285, 5029, 837, 3970, -252, 2862, -666, 2852, -666, 1057, -787, -159, -230 )
+
+[node name="Sprite" type="Sprite" parent="vongtrontuthan/Area2D"]
+scale = Vector2( 10.458, 9.1175 )
+texture = ExtResource( 43 )
+
+[node name="vongtron" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/mms = SubResource( 4 )
 
 [connection signal="timeout" from="Game_UI/Control/Winner/Win_timer" to="Game_UI/Control/Winner" method="_on_Win_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="timeout" from="SpawnTimer2" to="." method="_on_SpawnTimer2_timeout"]
+[connection signal="timeout" from="chuyenmap" to="." method="_on_chuyenmap_timeout"]

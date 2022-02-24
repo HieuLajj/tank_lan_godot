@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/amthanhdemnguoc.ogg-704156701547cb9896fc64e778a7b9c7.oggstr"
+
+[deps]
+
+source_file="res://music/amthanhdemnguoc.ogg"
+dest_files=[ "res://.import/amthanhdemnguoc.ogg-704156701547cb9896fc64e778a7b9c7.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

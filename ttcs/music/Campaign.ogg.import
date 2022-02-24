@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Campaign.ogg-de32ed7e37fa03142d39d312747d814a.oggstr"
+
+[deps]
+
+source_file="res://music/Campaign.ogg"
+dest_files=[ "res://.import/Campaign.ogg-de32ed7e37fa03142d39d312747d814a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

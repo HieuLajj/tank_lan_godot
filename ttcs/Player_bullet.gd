@@ -4,20 +4,30 @@ extends Sprite
 var velocity = Vector2(1,0)
 var player_rotation
 
-export(int) var speed = 1400
+export(int) var speed = 1100
 export(int) var damage = 25
 
 puppet var puppet_position setget puppet_position_set
 puppet var puppet_velocity = Vector2(0,0)
 puppet var puppet_rotation = 0
 
+#puppet var puppet_tankdohoa setget puppet_tankdohoa_set
+#var tankdohoa setget  tankdohoa_set
+var bulletdohoa setget bulletdohoa_set
+puppet var puppet_bulletdohoa setget puppet_bulletdohoa_set
+
 onready var initial_position = global_position
 var player_owner = 0
 
-var explosion = preload("res://Explosion.tscn")
+var explosion = preload("res://hieuungsung.tscn")
 var explosion2 = preload("res://hieuungsung.tscn")
 var explosion3 = preload("res://hieuungtuyet.tscn")
 
+
+var dando =null
+
+var cb =3
+var dannhunao 
 func _ready() -> void:
 	visible = false
 	yield(get_tree(), "idle_frame")
@@ -29,6 +39,9 @@ func _ready() -> void:
 			rset("puppet_rotation", rotation)
 			rset("puppet_position", global_position)
 	visible = true
+	
+	#bulletdohoa_set("dannangcap")
+	bulletdohoa_set(Tonghop.danban)
 func _process(delta: float)-> void:
 	if get_tree().has_network_peer():
 		if is_network_master():
@@ -60,10 +73,64 @@ func _on_Hitbox_body_entered(body):
 		var explosion_instance = explosion3.instance()
 		explosion_instance.position = get_global_position()
 		get_tree().get_root().add_child(explosion_instance)
+		cb=2
 		queue_free()
-	elif body.is_in_group("nguoichoi"):
-		var explosion_instance = explosion2.instance()
-		explosion_instance.position = get_global_position()
-		get_tree().get_root().add_child(explosion_instance)
+#	elif body.is_in_group("nguoichoi"):
+#		var explosion_instance = explosion2.instance()
+#		explosion_instance.position = get_global_position()
+#		get_tree().get_root().add_child(explosion_instance)
+#	else:
+#		pass
+func bulletdohoa_set(new_value)-> void:
+	bulletdohoa = new_value
+	if get_tree().has_network_peer():
+		if is_network_master():
+			chuyendoitrangthaidan(bulletdohoa)
+			rset("puppet_bulletdohoa",bulletdohoa)
+func puppet_bulletdohoa_set(new_value)-> void:
+	puppet_bulletdohoa = new_value
+	if get_tree().has_network_peer():
+		if not is_network_master():
+			chuyendoitrangthaidan(puppet_bulletdohoa)
+	
+func chuyendoitrangthaidan(a) -> void:
+	if a=="dannangcap":
+		dando =preload("res://mapPack/dannay/Fmothai.png")
 	else:
-		pass
+		dando = preload("res://mapPack/dannay/tankfire.png")
+	$Sprite.set_texture(dando)
+#func tankdohoa_set(new_value)-> void:
+#	tankdohoa = new_value
+#	if get_tree().has_network_peer():
+#		if is_network_master():
+#			chuyendoitrangthaitank(tankdohoa)
+#			#$Sprite.set_texture(tankdohoa)
+#			rset("puppet_tankdohoa",tankdohoa)
+#func puppet_tankdohoa_set(new_value)-> void:
+#	puppet_tankdohoa = new_value
+#	if get_tree().has_network_peer():
+#		if not is_network_master():
+#			chuyendoitrangthaitank(puppet_tankdohoa)	
+		#	$Sprite.set_texture(puppet_tankdohoa)
+#func chuyendoitrangthaitank(a) -> void:
+#	if a=="1":
+#		tankdo = preload("res://mapPack/tankaa/tank3-removebg-preview.png")
+#		loopdamage = 1
+#		checkdamage =1
+#	elif a=="2":
+#		tankdo = preload("res://mapPack/tankaa/tank1-removebg-preview.png")
+#		loopdamage = 2
+#		checkdamage =2
+#	elif a=="3":
+#		tankdo =preload("res://mapPack/tankaa/tank2-removebg-preview.png")
+#		loopdamage = 3
+#		checkdamage =3
+#	else:
+#		pass
+#	$Sprite.set_texture(tankdo)
+
+
+
+func _on_Hitbox_area_entered(area):
+	if area.is_in_group("thunder"):
+		queue_free()

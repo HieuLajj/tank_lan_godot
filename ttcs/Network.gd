@@ -29,7 +29,12 @@ func _ready() ->void:
 
 func create_server() -> void:
 	server = NetworkedMultiplayerENet.new()
+	if server.get_connection_status() != server.CONNECTION_DISCONNECTED:
+		server.close_connection(1)
 	server.create_server(DEFAULT_PORT,MAX_CLIENTS)
+	#fix
+	get_tree().set_network_peer(null)
+	
 	get_tree().set_network_peer(server)
 	Global.instance_node(load("res://Server_advertiser.tscn"), get_tree().current_scene)
 	
@@ -41,10 +46,22 @@ func join_server() -> void:
 func reset_network_connection() -> void:
 	if get_tree().has_network_peer():
 		get_tree().network_peer = null
-	
+
+func disconnect_server() -> void:
+	#get_tree().network_peer = null
+	#get_tree().get_network_unique_id()
+	if get_tree().is_network_server():
+		server.close_connection(1)
+	_player_disconnected2(get_tree().get_network_unique_id())
+	for child in Persistent_nodes.get_children():
+		if child.is_in_group("Net"):
+			child.queue_free()
+	get_tree().network_peer = null
+	reset_network_connection()
 func _connected_to_server() -> void:
 	print("ket noi thanh cong")
 func _server_disconnected() -> void:
+	#if get_tree().is_network_server():
 	print("ket noi khong thanh cong")
 	
 	for child in Persistent_nodes.get_children():
@@ -74,3 +91,18 @@ func networked_object_name_index_set(new_value):
 	if get_tree().is_network_server():
 		rset("puppet_networked_object_name_index", networked_object_name_index)
 		
+func _player_disconnected2(id) -> void:
+	if Persistent_nodes.has_node(str(id)):
+		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
+		Persistent_nodes.get_node(str(id)).hp_instance.queue_free()
+		Persistent_nodes.get_node(str(id)).queue_free()
+	for child in Persistent_nodes.get_children():
+		if child.is_in_group("Net"):
+			child.queue_free()
+			
+	reset_network_connection()
+func refresh():
+	for ip in IP.get_local_addresses():
+		if ip.begins_with("192.168.") and not ip.ends_with(".1"):
+			ip_address = ip
+
