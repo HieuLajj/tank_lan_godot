@@ -62,7 +62,6 @@ func _connected_to_server() -> void:
 	print("ket noi thanh cong")
 func _server_disconnected() -> void:
 	#if get_tree().is_network_server():
-	print("ket noi khong thanh cong")
 	
 	for child in Persistent_nodes.get_children():
 		if child.is_in_group("Net"):
@@ -71,6 +70,7 @@ func _server_disconnected() -> void:
 	reset_network_connection()
 	
 	if Global.ui != null:
+		print("ket noi khong thanh cong")
 		var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
 		prompt.set_text("Khong the ket noi duoc voi server")
 	

@@ -1,18 +1,21 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://mapPack/flappybird/background.png" type="Texture" id=1]
-[ext_resource path="res://music/round_end.ogg" type="AudioStream" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://Winner.gd" type="Script" id=4]
 [ext_resource path="res://mapcuoi2.gd" type="Script" id=5]
 [ext_resource path="res://ObstacleSpawner.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Game_UI3.gd" type="Script" id=7]
+[ext_resource path="res://UI.gd" type="Script" id=8]
+[ext_resource path="res://Cameramapcuoi.gd" type="Script" id=9]
+[ext_resource path="res://music/win2.wav" type="AudioStream" id=10]
 
 [sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 void fragment(){
 	vec2 shiftteduv = UV;
-	shiftteduv.x += TIME * 0.4;
+	shiftteduv.x += TIME * 0.1;
 	vec4 color = texture(TEXTURE, shiftteduv);
 	COLOR = color;
 }"
@@ -26,12 +29,119 @@ outline_size = 4
 outline_color = Color( 0.0196078, 0.0196078, 0.0196078, 1 )
 font_data = ExtResource( 3 )
 
+[sub_resource type="Shader" id=6]
+code = "// Fireworks shader
+// Based on shadertoy shader by Martijn Steinrucken aka BigWings - 2015 
+// (https://www.shadertoy.com/view/lscGRl)
+
+shader_type canvas_item;
+
+uniform float PI = 3.141592653589793238;
+uniform float TWOPI = 6.283185307179586 ;
+uniform float NUM_EXPLOSIONS = 8.0;
+uniform float NUM_PARTICLES = 70.0;
+
+// Noise functions by Dave Hoskins
+
+uniform vec3 MOD3 = vec3(0.1031,0.11369,0.13787);
+
+vec3 hash31(float p) {
+   vec3 p3 = fract(vec3(p) * MOD3);
+   p3 += dot(p3, p3.yzx + 19.19);
+   return fract(vec3((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y, (p3.y+p3.z)*p3.x));
+}
+
+float hash12(vec2 p) // attention changement vec2 p en vec3
+{
+                vec3 p3  = fract(vec3(p.xy, 0.0) * MOD3);
+    p3 += dot(p3, p3.yzx + 19.19);
+    return fract((p3.x + p3.y) * p3.z);
+}
+
+float circ(vec2 uv, vec2 pos, float size) {
+                uv -= pos;
+    
+    size *= size;
+    return smoothstep(size*1.1, size, dot(uv, uv));
+}
+
+float lighter(vec2 uv, vec2 pos, float size) {
+    uv -= pos;
+    size *= size;
+    return size/dot(uv, uv);
+}
+
+vec3 explosion(vec2 uv, vec2 p, float seed, float t) {
+                
+    vec3 col = vec3(0.);
+    
+    vec3 en = hash31(seed);
+    vec3 baseCol = en;
+    for(float i=0.; i<NUM_PARTICLES; i++) {
+               vec3 n = hash31(i)-.5;
+       
+                               vec2 startP = p-vec2(0., t*t*.1);        
+        vec2 endP = startP+normalize(n.xy)*n.z;
+        
+        
+        float pt = 1.-pow(t-1., 2.);
+        vec2 pos = mix(p, endP, pt);    
+        float size = mix(.01, .005, smoothstep(0., .1, pt));
+        size *= smoothstep(1., .1, pt);
+        
+        float sparkle = (sin((pt+n.z)*100.)*.5+.5);
+        sparkle = pow(sparkle, pow(en.x, 3.)*50.)*mix(0.01, .01, en.y*n.y);
+		float B = smoothstep(en.x-en.z, en.x+en.z, t)*smoothstep(en.y+en.z, en.y-en.z, t);
+        size += sparkle*B;
+        
+        col += baseCol*lighter(uv, pos, size);
+    }
+    
+    return col;
+}
+
+
+void fragment() {
+    vec2 iResolution = vec2(1024,600);
+	vec2 uv = FRAGCOORD.xy / iResolution.xy;
+                uv.x -= .5;
+    uv.x *= iResolution.x/iResolution.y;
+    
+    float n = hash12(uv+10.0);
+    float t = TIME*.5;
+    
+    vec3 c = vec3(0.);
+    
+    for(float i=0.; i<NUM_EXPLOSIONS; i++) {
+               float et = t+i*1234.45235;
+        float id = floor(et);
+        et -= id;
+        
+        vec2 p = hash31(id).xy;
+        p.x -= .5;
+        p.x *= 1.6;
+        c += explosion(uv, p, id, et);
+		}
+    
+	float alpha = 1.0;
+//	if (c.x < 0.2){alpha=0.0;} 
+    COLOR = vec4(c, alpha);
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/PI = 3.14159
+shader_param/TWOPI = 6.28319
+shader_param/NUM_EXPLOSIONS = 8.0
+shader_param/NUM_PARTICLES = 70.0
+shader_param/MOD3 = Vector3( 0.1031, 0.11369, 0.13787 )
+
 [node name="mapcuoi2" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( -4.76837e-07, 0 )
-scale = Vector2( 1.31768, 1.3347 )
+position = Vector2( -770, -398 )
+scale = Vector2( 4, 4 )
 z_index = -99
 
 [node name="TextureRect" type="TextureRect" parent="Node2D"]
@@ -67,10 +177,11 @@ position = Vector2( 393, 78 )
 position = Vector2( 417, 253 )
 
 [node name="Game_UI3" type="CanvasLayer" parent="."]
+layer = 0
 script = ExtResource( 7 )
 
 [node name="winnermusic" type="AudioStreamPlayer" parent="Game_UI3"]
-stream = ExtResource( 2 )
+stream = ExtResource( 10 )
 
 [node name="Control" type="Control" parent="Game_UI3"]
 anchor_right = 1.0
@@ -96,6 +207,14 @@ __meta__ = {
 }
 
 [node name="Win_timer" type="Timer" parent="Game_UI3/Control/Winner"]
+wait_time = 10.0
+
+[node name="Sprite" type="Sprite" parent="Game_UI3/Control/Winner"]
+material = SubResource( 7 )
+position = Vector2( 321, 6.00001 )
+scale = Vector2( 10.125, 5.125 )
+z_index = -1
+texture = ExtResource( 2 )
 
 [node name="ObstacleSpawner" parent="." instance=ExtResource( 6 )]
 position = Vector2( 641, -1 )
@@ -103,7 +222,15 @@ position = Vector2( 641, -1 )
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2( 319, 130 )
-polygon = PoolVector2Array( -323, 40, -319, -131, 327, -129, 327, 197, 27, 195, -322, 194, -322, 45, -349, 239, 364, 237, 356, -161, -348, -161 )
+position = Vector2( 257, 128 )
+polygon = PoolVector2Array( -260, 228, -257, -130, 379, -126, 378, 192, 27, 195, -188, 194, -256, 192, -258, 224, 398, 214, 403, -155, -294, -151 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 8 )
+
+[node name="Cameramapcuoi" type="Camera2D" parent="."]
+position = Vector2( 0, -1 )
+current = true
+script = ExtResource( 9 )
 
 [connection signal="timeout" from="Game_UI3/Control/Winner/Win_timer" to="Game_UI3/Control/Winner" method="_on_Win_timer_timeout"]

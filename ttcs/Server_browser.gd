@@ -6,7 +6,7 @@ onready var server_listener = $Server_listener
 onready var server_ip_text_edit = $Background_panel/Server_ip_text_edit
 onready var server_container = $Background_panel/VBoxContainer
 onready var manual_setup_button = $Background_panel/Manual_setup
-
+onready var audio = $audioserver
 func _ready() -> void:
 	server_ip_text_edit.hide()
 	
@@ -25,6 +25,7 @@ func _on_Server_listener_remove_server(serverIp):
 
 
 func _on_Manual_setup_pressed():
+	audio.play()
 	if manual_setup_button.text != "exit setup":
 		server_ip_text_edit.show()
 		manual_setup_button.text = "exit setup"
@@ -39,10 +40,14 @@ func _on_Manual_setup_pressed():
 
 
 func _on_Go_back_pressed():
+	audio.play()
 	get_tree().reload_current_scene()
 
 
 func _on_join_server_pressed():
-	Network.ip_address = server_ip_text_edit.text
-	hide()
-	Network.join_server()
+	audio.play()
+	if server_ip_text_edit.text!="":
+		audio.play()
+		Network.ip_address = server_ip_text_edit.text
+		hide()
+		Network.join_server()

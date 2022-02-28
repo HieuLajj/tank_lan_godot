@@ -29,6 +29,10 @@ func _process(delta):
 		rpc("switch_to_game4")
 	if Input.is_action_just_pressed("chuyen5"):
 		rpc("switch_to_game5")
+	if Global.alive_players.size()<2:
+		$vongtron.stop()
+		
+	
 #	if Input.is_action_just_pressed("tankred"):
 #		for player in Persistent_nodes.get_children():
 #			if player.is_in_group("Player"):

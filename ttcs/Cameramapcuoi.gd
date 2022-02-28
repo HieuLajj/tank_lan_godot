@@ -12,7 +12,7 @@ func _process(delta: float) -> void  :
 			global_position = lerp(global_position, Global.player_master.global_position, delta * 10)
 		else:
 			global_position =Vector2(0,0)
-			get_tree().change_scene("res://Network_setup.tscn")
+		#	get_tree().change_scene("res://Network_setup.tscn")
 	else:
 		if Global.alive_players.size() >= 1:
 			if target_player == null:

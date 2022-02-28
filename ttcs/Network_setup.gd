@@ -13,6 +13,7 @@ onready var start_game = $UI/Start_game
 var ten=null
 var bienten =1
 var tenthat
+onready var audio = $audio
 func _ready() -> void:
 	#thiet lap tro ve map binh thuong
 	Tonghop.nhanvatset("null")
@@ -63,6 +64,7 @@ func _player_disconnected(id) -> void:
 		Persistent_nodes.get_node(str(id)).queue_free()
 
 func _on_Create_server_pressed():
+	audio.play()
 	if username_text_edit.text !="":
 		$chatbox.show()
 	#	$UI/Button.show()
@@ -73,6 +75,7 @@ func _on_Create_server_pressed():
 
 
 func _on_join_server_pressed():
+	audio.play()
 	if username_text_edit.text != "":
 	#	$UI/Button.show()
 		$chatbox.show()
@@ -97,6 +100,7 @@ func instance_player(id) -> void:
 
 
 func _on_Start_game_pressed():
+	audio.play()
 	rpc("switch_to_game")
 
 sync func switch_to_game() -> void:
@@ -123,6 +127,7 @@ remote func share_message(_text_):
 
 
 func _on_posttext_pressed():
+	audio.play()
 	if message.text.empty():
 		return
 	else:
@@ -136,9 +141,11 @@ func _on_posttext_pressed():
 
 
 func _on_Campaign_pressed():
+	audio.play()
 	get_tree().change_scene("res://gameoffline/Arena.tscn")
 
 func _on_Button_pressed():
+	audio.play()
 	get_tree().change_scene("res://GUI.tscn")
 	Network.disconnect_server()
 	Network.refresh()

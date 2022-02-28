@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tile_jungle_tree_light.png-78e0addf8066dd03f4a840ca36424b2f.stex"
+path="res://.import/phongtrang.jpg-c804a38bea4312f851f7965e9e891d53.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mapPack/jungle/tile_jungle_tree_light.png"
-dest_files=[ "res://.import/tile_jungle_tree_light.png-78e0addf8066dd03f4a840ca36424b2f.stex" ]
+source_file="res://mapPack/phongtrang.jpg"
+dest_files=[ "res://.import/phongtrang.jpg-c804a38bea4312f851f7965e9e891d53.stex" ]
 
 [params]
 
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

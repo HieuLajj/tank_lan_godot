@@ -13,6 +13,7 @@ func _exit_tree():
 
 
 func _on_back_pressed():
+	$audio.play()
 	get_tree().change_scene("res://Network_setup.tscn")
 
 

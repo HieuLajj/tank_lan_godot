@@ -10,9 +10,10 @@ func _on_Timer_timeout():
 	if m==2:
 		spawn_obstacle()
 func spawn_obstacle():
-	var obstacle = Obstacle.instance()
-	add_child(obstacle)
-	obstacle.position.y = randi()%100+10
+	if Global.alive_players.size() >1:
+		var obstacle = Obstacle.instance()
+		add_child(obstacle)
+		obstacle.position.y = randi()%100+10
 func start():
 	timer.start()
 func sop():

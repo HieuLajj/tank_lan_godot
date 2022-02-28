@@ -14,7 +14,6 @@ var mm=1
 # Called when the node enters the scene tree for the first time.
 func hom()-> void:
 	print("nguenlahef")
-
 func danbanset(new_value)-> void:
 	if get_tree().has_network_peer():
 		if Global.alive_players[0].name == str(get_tree().get_network_unique_id()):

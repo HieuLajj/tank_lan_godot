@@ -87,6 +87,10 @@ var itemdem3 = 1
 #pac man
 var pacmana= 1
 var rgb =1
+#tieptuc
+onready var bounce_raycasts = $BounceRaycast
+const BOUNCE_VELOCITY = -1000
+onready var audiomenu = $audiomenu
 func _ready():
 	get_tree().connect("network_peer_connected",self,"_network_peer_connected")
 	username_text_instance = Global.instance_node_at_location(username_text, Persistent_nodes, global_position)
@@ -174,6 +178,7 @@ func _process(delta: float) -> void:
 				else:
 					on_ground = false
 					$ninja.play("jump")
+				_check_bounce(delta)
 			elif Tonghop.nhanvat=="map3":
 				set_rotation(0)
 				#velocity.x = Vector2.ZERO
@@ -284,7 +289,7 @@ func _process(delta: float) -> void:
 					
 				look_at(get_global_mouse_position())
 			# vao trong vong 1 tab
-				if Input.is_action_just_pressed("click") and can_shoot and not is_reloading:
+				if Input.is_action_just_pressed("click") and can_shoot and not is_reloading and $CanvasLayer/menu.visible == false:
 					if loopdamage ==2:
 						dannangcap()
 						dannangcap()
@@ -726,33 +731,40 @@ func _on_audio_finished():
 
 
 func _on_giamamluong_pressed():
+	audiomenu.play()
 	AudioServer.set_bus_volume_db(0,AudioServer.get_bus_volume_db(0)-1)
 	
 
 func _on_tangamluong_pressed():
+	audiomenu.play()
 	AudioServer.set_bus_volume_db(0,AudioServer.get_bus_volume_db(0)+1)
 	
 
 
 func _on_Resume_game_pressed():
+	audiomenu.play()
 	$CanvasLayer/menu.visible = false
 	
 func _on_chuyenchedo_pressed():
+	audiomenu.play()
 	if $nhacnen.playing == false:
 		$nhacnen.play()
 	else:
 		$nhacnen.stop()
 
 func _on_Quit_game_pressed():
+	audiomenu.play()
 	get_tree().quit()
 
 
 func _on_Back_lobby_pressed():
+	audiomenu.play()
 	get_tree().change_scene("res://GUI.tscn")
 	Network.disconnect_server()
 
 
 func _on_chuyenbainen_pressed():
+	audiomenu.play()
 	#var rng = RandomNumberGenerator.new()
 	#rng.randomize()
 #	if rng.randi_range(1,3)==1:
@@ -835,3 +847,24 @@ func _on_dogy_animation_finished():
 	if speed ==0:
 		speed = 150
 	stunned2 = false
+
+
+func _on_ghosttimer_timeout():
+	if Tonghop.nhanvat=="map2" and velocity.x != 0:		
+		var this_ghost = preload("res://ghost.tscn").instance()
+		get_parent().add_child(this_ghost)
+		this_ghost.position = position;
+		this_ghost.texture = $ninja.frames.get_frame($ninja.animation, $ninja.frame)
+		this_ghost.flip_h=$ninja.flip_h
+func _check_bounce(delta):
+	if velocity.y !=0:
+		for raycast in bounce_raycasts.get_children():
+			raycast.cast_to = Vector2.DOWN * velocity * delta + Vector2.DOWN
+			raycast.force_raycast_update()
+			if raycast.is_colliding() && raycast.get_collision_normal() == Vector2.UP:
+				print("fifa")
+				velocity.y =(raycast.get_collision_point()-raycast.global_position - Vector2.DOWN).y / delta
+				raycast.get_collider().entity.call_deferred("be_bounced_upon",self)
+				break
+func bounce(bounce_velocity = BOUNCE_VELOCITY):
+	velocity.y = bounce_velocity

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://hinhnennetwork.jpg" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Font-chu-dep/Font-chu-dep/Cucho Bold.otf" type="DynamicFontData" id=4]
 [ext_resource path="res://UI.gd" type="Script" id=5]
 [ext_resource path="res://Font-chu-dep/Font-chu-dep/Pony.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://music/tienganchuot.wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -213,6 +214,10 @@ text = "BACK"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = 8.5
 
 [connection signal="pressed" from="Multiplayer_configure/Create_server" to="." method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Multiplayer_configure/join_server" to="." method="_on_join_server_pressed"]
