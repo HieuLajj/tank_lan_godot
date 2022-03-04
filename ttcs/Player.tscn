@@ -86,46 +86,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=15]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 48, 0, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=16]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 48, 48, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=17]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 48, 96, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=18]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 48, 144, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=23]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 0, 144, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=24]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 48, 144, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=25]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 96, 144, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=26]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 144, 144, 48, 48 )
-
 [sub_resource type="AtlasTexture" id=19]
 flags = 4
 atlas = ExtResource( 40 )
@@ -145,26 +105,6 @@ region = Rect2( 144, 96, 48, 48 )
 flags = 4
 atlas = ExtResource( 40 )
 region = Rect2( 144, 144, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=11]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 96, 0, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=12]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 96, 48, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=13]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 96, 96, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=14]
-flags = 4
-atlas = ExtResource( 40 )
-region = Rect2( 96, 144, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=6]
 flags = 4
@@ -186,21 +126,76 @@ flags = 4
 atlas = ExtResource( 40 )
 region = Rect2( 0, 144, 48, 48 )
 
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 96, 48, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 96, 96, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 96, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 0, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 48, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 96, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 144, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 48, 48, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 48, 96, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 40 )
+region = Rect2( 48, 144, 48, 48 )
+
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
-"loop": true,
-"name": "sangtrai",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
-"loop": true,
-"name": "trungbomb",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
 "loop": true,
 "name": "sangphai",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "tienlen",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
@@ -208,9 +203,14 @@ animations = [ {
 "name": "luisau",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
 "loop": true,
-"name": "tienlen",
+"name": "trungbomb",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "sangtrai",
 "speed": 5.0
 } ]
 
@@ -228,36 +228,6 @@ region = Rect2( 48, 64, 48, 64 )
 flags = 4
 atlas = ExtResource( 41 )
 region = Rect2( 96, 64, 48, 64 )
-
-[sub_resource type="AtlasTexture" id=27]
-flags = 4
-atlas = ExtResource( 41 )
-region = Rect2( 0, 192, 48, 64 )
-
-[sub_resource type="AtlasTexture" id=28]
-flags = 4
-atlas = ExtResource( 41 )
-region = Rect2( 48, 192, 48, 64 )
-
-[sub_resource type="AtlasTexture" id=29]
-flags = 4
-atlas = ExtResource( 41 )
-region = Rect2( 96, 192, 48, 64 )
-
-[sub_resource type="AtlasTexture" id=33]
-flags = 4
-atlas = ExtResource( 41 )
-region = Rect2( 0, 128, 48, 64 )
-
-[sub_resource type="AtlasTexture" id=34]
-flags = 4
-atlas = ExtResource( 41 )
-region = Rect2( 48, 128, 48, 64 )
-
-[sub_resource type="AtlasTexture" id=35]
-flags = 4
-atlas = ExtResource( 41 )
-region = Rect2( 96, 128, 48, 64 )
 
 [sub_resource type="AtlasTexture" id=40]
 flags = 4
@@ -339,6 +309,21 @@ flags = 4
 atlas = ExtResource( 41 )
 region = Rect2( 0, 192, 48, 64 )
 
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 41 )
+region = Rect2( 0, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 41 )
+region = Rect2( 48, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 41 )
+region = Rect2( 96, 192, 48, 64 )
+
 [sub_resource type="AtlasTexture" id=36]
 flags = 4
 atlas = ExtResource( 41 )
@@ -354,6 +339,21 @@ flags = 4
 atlas = ExtResource( 41 )
 region = Rect2( 96, 0, 48, 64 )
 
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 41 )
+region = Rect2( 0, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 41 )
+region = Rect2( 48, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=35]
+flags = 4
+atlas = ExtResource( 41 )
+region = Rect2( 96, 128, 48, 64 )
+
 [sub_resource type="SpriteFrames" id=39]
 animations = [ {
 "frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ) ],
@@ -361,24 +361,24 @@ animations = [ {
 "name": "phai",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
-"loop": true,
-"name": "trai",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
-"loop": true,
-"name": "tien",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ) ],
 "loop": true,
 "name": "trung",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
+"loop": true,
+"name": "trai",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 36 ), SubResource( 37 ), SubResource( 38 ) ],
 "loop": true,
 "name": "lui",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "tien",
 "speed": 5.0
 } ]
 
@@ -519,7 +519,7 @@ visible = false
 scale = Vector2( 0.0772613, 0.0567627 )
 frames = SubResource( 4 )
 animation = "run"
-frame = 6
+frame = 1
 playing = true
 
 [node name="audio2" type="AudioStreamPlayer" parent="."]
@@ -529,7 +529,7 @@ visible = false
 scale = Vector2( 0.454214, 0.401928 )
 frames = SubResource( 5 )
 animation = "idle2"
-frame = 2
+frame = 1
 playing = true
 
 [node name="bomber" type="AnimatedSprite" parent="."]
@@ -538,7 +538,7 @@ position = Vector2( -2.5, -6 )
 scale = Vector2( 1.02262, 0.977132 )
 frames = SubResource( 10 )
 animation = "tienlen"
-frame = 3
+frame = 2
 playing = true
 
 [node name="dogy" type="AnimatedSprite" parent="."]
@@ -546,7 +546,7 @@ visible = false
 scale = Vector2( 0.579627, 0.456673 )
 frames = SubResource( 39 )
 animation = "tien"
-frame = 2
+frame = 1
 playing = true
 
 [node name="Light2D" type="Light2D" parent="dogy"]

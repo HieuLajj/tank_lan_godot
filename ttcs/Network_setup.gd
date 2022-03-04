@@ -40,7 +40,6 @@ func _ready() -> void:
 	else:
 		start_game.hide()
 		$chatbox.hide()
-		#$UI/Button.hide()
 	Tonghop.kiemtramap=1
 func _process(_delta: float) -> void:
 	#device_ip_address.text = Network.ip_address
@@ -67,7 +66,6 @@ func _on_Create_server_pressed():
 	audio.play()
 	if username_text_edit.text !="":
 		$chatbox.show()
-	#	$UI/Button.show()
 		Network.current_player_username = username_text_edit.text
 		multiplayer_config_ui.hide()
 		Network.create_server()
@@ -77,7 +75,6 @@ func _on_Create_server_pressed():
 func _on_join_server_pressed():
 	audio.play()
 	if username_text_edit.text != "":
-	#	$UI/Button.show()
 		$chatbox.show()
 		multiplayer_config_ui.hide()
 		username_text_edit.hide()

@@ -10,7 +10,7 @@ onready var audio = $audioserver
 func _ready() -> void:
 	server_ip_text_edit.hide()
 	
-
+# khoi tao thang server tu dong
 func _on_Server_listener_new_server(serverInfo):
 	var server_node = Global.instance_node(load("res://Server_display.tscn"), server_container)
 	server_node.text ="%s - %s" %[serverInfo.ip, serverInfo.name]
@@ -36,7 +36,6 @@ func _on_Manual_setup_pressed():
 		server_ip_text_edit.hide()
 		manual_setup_button.text = "manual setup"  # chi de doi ten thoi chu chang co gi me dau
 		server_container.show()
-
 
 
 func _on_Go_back_pressed():

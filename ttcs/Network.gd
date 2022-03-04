@@ -34,7 +34,6 @@ func create_server() -> void:
 	server.create_server(DEFAULT_PORT,MAX_CLIENTS)
 	#fix
 	get_tree().set_network_peer(null)
-	
 	get_tree().set_network_peer(server)
 	Global.instance_node(load("res://Server_advertiser.tscn"), get_tree().current_scene)
 	

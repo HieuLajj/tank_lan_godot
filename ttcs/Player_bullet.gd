@@ -85,7 +85,7 @@ func bulletdohoa_set(new_value)-> void:
 	bulletdohoa = new_value
 	if get_tree().has_network_peer():
 		if is_network_master():
-			chuyendoitrangthaidan(bulletdohoa)
+		#	chuyendoitrangthaidan(bulletdohoa)
 			rset("puppet_bulletdohoa",bulletdohoa)
 func puppet_bulletdohoa_set(new_value)-> void:
 	puppet_bulletdohoa = new_value
@@ -94,41 +94,12 @@ func puppet_bulletdohoa_set(new_value)-> void:
 			chuyendoitrangthaidan(puppet_bulletdohoa)
 	
 func chuyendoitrangthaidan(a) -> void:
-	if a=="dannangcap":
-		dando =preload("res://mapPack/dannay/Fmothai.png")
-	else:
-		dando = preload("res://mapPack/dannay/tankfire.png")
-	$Sprite.set_texture(dando)
-#func tankdohoa_set(new_value)-> void:
-#	tankdohoa = new_value
-#	if get_tree().has_network_peer():
-#		if is_network_master():
-#			chuyendoitrangthaitank(tankdohoa)
-#			#$Sprite.set_texture(tankdohoa)
-#			rset("puppet_tankdohoa",tankdohoa)
-#func puppet_tankdohoa_set(new_value)-> void:
-#	puppet_tankdohoa = new_value
-#	if get_tree().has_network_peer():
-#		if not is_network_master():
-#			chuyendoitrangthaitank(puppet_tankdohoa)	
-		#	$Sprite.set_texture(puppet_tankdohoa)
-#func chuyendoitrangthaitank(a) -> void:
-#	if a=="1":
-#		tankdo = preload("res://mapPack/tankaa/tank3-removebg-preview.png")
-#		loopdamage = 1
-#		checkdamage =1
-#	elif a=="2":
-#		tankdo = preload("res://mapPack/tankaa/tank1-removebg-preview.png")
-#		loopdamage = 2
-#		checkdamage =2
-#	elif a=="3":
-#		tankdo =preload("res://mapPack/tankaa/tank2-removebg-preview.png")
-#		loopdamage = 3
-#		checkdamage =3
-#	else:
-#		pass
-#	$Sprite.set_texture(tankdo)
-
+	#if a=="dannangcap":
+		#dando =preload("res://mapPack/dannay/Fmothai.png")
+	#else:
+		#dando = preload("res://mapPack/dannay/tankfire.png")
+	#$Sprite.set_texture(dando)
+	pass
 
 
 func _on_Hitbox_area_entered(area):

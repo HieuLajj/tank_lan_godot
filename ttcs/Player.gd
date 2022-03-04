@@ -95,7 +95,6 @@ func _ready():
 	get_tree().connect("network_peer_connected",self,"_network_peer_connected")
 	username_text_instance = Global.instance_node_at_location(username_text, Persistent_nodes, global_position)
 	username_text_instance.player_following =self
-	
 	#hp
 	hp_instance = Global.instance_node_at_location(hpdayne, Persistent_nodes, global_position)
 	hp_instance.player_following2 = self
@@ -109,34 +108,19 @@ func _ready():
 			Global.player_master = self
 	b=1
 	bg=get_tree().get_network_unique_id()
-	
-#	while message.text.length()!=0:
-#		message.delete_char_at_cursor()
 	Tonghop.tennhanvatset(username)
 	stunned = false
 	stunned2 = false
-	#$audio2.set_bus_volume_db(0,12)
 func _process(delta: float) -> void:
-	#if tankdohoa =="2":
-	#	Tonghop.danbanset("dannangcap")
 	var motion =Vector2()
 	#hp xet
 	if username_text_instance != null:
 		username_text_instance.name = "username" +name
-	#if Tonghop.nhanvat=="map2":
-	#			if get_tree(). get_network_connected_peers():
-	#				set_rotation(0)
-	#				$Sprite.hide()
-	#				$ninja.show()
-	#				rpc("switch_to_game")
 	if get_tree().has_network_peer():
 		if is_network_master() and visible: #kiem tra day la may chu hay ko (nguoi choi hien tai), neu khong phai may chu chung ta se khong the di chuyen
-			#var input_vector = Vector2.ZERO
-			#test map 2
 			if Tonghop.nhanvat=="map2":
 				#ACCELERATION = 0 
-				#FRICTION = 0
-			#	velocity = velocity.move_toward(Vector2.ZERO, 0 * delta) 
+				#FRICTION = 0 
 				set_rotation(0)
 				if hp>0:
 					$Sprite.hide()
@@ -166,12 +150,6 @@ func _process(delta: float) -> void:
 				if is_on_floor():
 					on_ground = true
 					can_double_jump = false
-				#	if velocity.x==0:
-				#		$ninja.play("idle")
-				#	else:
-				#		$ninja.play("run")
-				#		$audio2.stream = audio_run
-				#		$audio2.play()
 					if velocity.x != 0:
 						$audio2.stream = audio_run
 						$audio2.play()
@@ -279,13 +257,6 @@ func _process(delta: float) -> void:
 					velocity = Vector2.ZERO
 		
 				move_and_slide(velocity * delta)
-				#input_vector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-				#input_vector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
-				#if input_vector != Vector2.ZERO:
-				#	velocity = input_vector
-				#else:
-				#	velocity = Vector2.ZERO
-				#move_and_collide(velocity*200*delta)
 					
 				look_at(get_global_mouse_position())
 			# vao trong vong 1 tab
@@ -296,10 +267,6 @@ func _process(delta: float) -> void:
 					else:
 						dannangcap()
 				var bombing = Input.is_action_just_pressed("set_bomb")
-			#	var bombing = Input.is_action_pressed("set_bomb")
-				#if stunned:
-				#	bombing = false
-					#motion = Vector2()	
 				if bombing and not prev_bombing:
 					if itemdem>0 and Tonghop.kiemtramap==2:
 						var bomb_name = username
@@ -307,10 +274,6 @@ func _process(delta: float) -> void:
 						rpc("setup_bomb", bomb_name, bomb_pos, get_tree().get_network_unique_id())
 						itemdem -=1
 				var smoking = Input.is_action_just_pressed("smoke")
-			#	var bombing = Input.is_action_pressed("set_bomb")
-				#if stunned:
-				#	bombing = false
-					#motion = Vector2()	
 				if smoking and not prev_bombing:
 					if itemdem2 >0 and Tonghop.kiemtramap==2:
 						var bomb_name = username
@@ -318,44 +281,12 @@ func _process(delta: float) -> void:
 						rpc("setup_bomb2", bomb_name, bomb_pos, get_tree().get_network_unique_id())
 						itemdem2 -= 1
 				var thundering = Input.is_action_just_pressed("thunder")
-			#	var bombing = Input.is_action_pressed("set_bomb")
-				#if stunned:
-				#	bombing = false
-					#motion = Vector2()	
 				if thundering and not prev_bombing:
 					if itemdem3 >0 and Tonghop.kiemtramap==2:
 						var bomb_name = username
 						var bomb_pos = position
 						rpc("setup_bomb3", bomb_name, bomb_pos, get_tree().get_network_unique_id())
 						itemdem3 -= 1
-			#move_and_slide(Vector2(0,0),Vector2(0,0))
-			
-			#if Input.is_action_just_pressed("chatbox"):
-			#	if $CanvasLayer/chatbox.visible ==true:
-			#		$CanvasLayer/chatbox.visible = false
-			#	else:
-			#		$CanvasLayer/chatbox.visible = true
-			#if Input.is_action_just_pressed("chuyen"):
-			#	Tonghop.nhanvatset("map2")
-			
-				
-			
-				#print("bannay")
-				#rpc("instance_bullet",get_tree().get_network_unique_id())
-				#is_reloading = true
-				#reload_timer.start()
-				#$audio.play()
-			#if Input.is_action_just_pressed("home"):
-				#Network.disconnect_server()
-			#	get_tree().change_scene("res://GUI.tscn")
-			#	Network.disconnect_server()
-				#tankdohoa_set("2")
-			#if Input.is_action_just_pressed("testdan"):
-				##ge="lai"
-			#	tankdohoa_set("2")
-			#	if $CanvasLayer/chatbox.show():
-			#		$CanvasLayer/chatbox.hide()
-	
 				if tankdohoa !="2":
 					if hp>200:
 						tankdohoa_set("1")
@@ -365,18 +296,12 @@ func _process(delta: float) -> void:
 		else: # neu chung ta khong phai nguoi choi hien tai (kieu player nay suat hien tren mang kia roi nhung tren mang day no ko phai nguoi choi hien tai cua no thi chi gui thong tin goc di thoi)
 			if Tonghop.nhanvat=="map2":
 				set_rotation(0)
-			#	if $Sprite.visible:
-			#		$Sprite.hide()
-			#		$ninja.show()
 				if hp>0:
 					$Sprite.hide()
 					$ninja.show()
 				velocity = puppet_velocity2
 			if Tonghop.nhanvat == "map3":
 				set_rotation(0)
-			#	if $Sprite.visible:
-			#		$Sprite.hide()
-			#		$ninja.show()
 				if hp>0:
 					$Sprite.hide()
 					$plane.show()
@@ -390,8 +315,7 @@ func _process(delta: float) -> void:
 				$Sprite.hide()
 				$dogy.show()
 				motion = puppet_motion
-			rotation = lerp_angle(rotation,puppet_rotation,delta * 8)	# xac dinh gui thong tin goc quay
-		
+			rotation = lerp_angle(rotation,puppet_rotation,delta * 8)	# xac dinh gui thong tin goc quay		
 			if not tween.is_active():
 				move_and_slide(puppet_velocity * speed)
 		if velocity.x <0:
@@ -417,16 +341,12 @@ func _process(delta: float) -> void:
 			$bomber.play("sangphai")
 			$dogy.play("phai")
 		if stunned:
-			$bomber.play("trungbomb")
-			
+			$bomber.play("trungbomb")		
 			hp -=0.5
 		if stunned2:
-			$dogy.play("trung")
-				
-	
+			$dogy.play("trung")		
 		hp_set(String(hp))
 		
-	
 	if hp<=0:
 		if username_text_instance.visible == true:
 			var explosion_instance = hieuungsauchet.instance()
@@ -442,21 +362,6 @@ func _process(delta: float) -> void:
 				rpc("destroy")
 	if Input.is_action_pressed("pause"):
 		$CanvasLayer/menu.visible = true
-		#for player in Persistent_nodes.get_children():
-		#	if player.is_in_group("Player"):
-		#		player.visible = false
-		#		player.update_shoot_mode(false)
-		#Global.instance_node(load("res://PauseMenu2.tscn"), Global.ui)
-		#pass
-	#	for child in Persistent_nodes.get_children():
-	#	if child.is_in_group("Player"):
-		#	Tonghop.danbanset("danthuong")
-	#		child.update_shoot_mode(true)
-		#$PauseMenu2.visible = true
-		#Global.instance_node(load("res://PauseMenu2.tscn"),self)
-		#get_tree().change_scene("res://PauseMenu2.tscn")
-		#Global.instance_node(load("res://PauseMenu2.tscn"),self)
-		#get_tree().quit()
 		
 func lerp_angle(from, to, weight):      # lam cho goc xoay muot hon             # doi khi mot nguoi se khong xoay 1 con duong ngan nhat
 	return from + short_angle_dist(from, to) *weight
@@ -555,13 +460,6 @@ func _on_Network_tick_rate_timeout():
 			rset_unreliable("puppet_rotation", rotation) # gui goc quay cua vat the di
 sync func instance_bullet(id):
 	var player_bullet_instance = Global.instance_node_at_location(player_bullet, Persistent_nodes, shoot_point.global_position)
-	#if ge=="lai":
-		#player_bullet_instance.texture= load("res://mapPack/dannay/tankfire.png")
-	#if get_tree().has_network_peer():
-	#player_bullet_instance.bulletdohoa_set("dannangcap")
-	#player_bullet_instance.get_instance_id(id).bulletdohoa_set("dohoanangcap")
-	#print("hêolfaw")
-#	print(id)
 	player_bullet_instance.name = "Bullet" + name +str(Network.networked_object_name_index)
 	player_bullet_instance.set_network_master(id)
 	player_bullet_instance.player_rotation = rotation
@@ -630,11 +528,6 @@ func _on_Hitbox_area_entered(area):
 		get_tree().get_root().add_child(explosion_instance)
 		hp=hp+25
 		$audio33.play()
-		#heal_timer.start()
-		#hit_timer.start()
-		#set_hp(hp)
-		#hp_set(String(hp))
-		#hp_set(String(hp))
 	if area.is_in_group("hieuungtocdo"):
 		var explosion_instance = explosion6tocdo.instance()
 		explosion_instance.position = get_global_position()
@@ -771,10 +664,8 @@ func _on_chuyenbainen_pressed():
 	match rgb:
 		1:
 			$nhacnen.stream =load("res://music/bells2_1.ogg")
-	#if rng.randi_range(1,3)==2:
 		2:
 			$nhacnen.stream =load("res://music/TheLoomingBattle.OGG")
-	#else:
 		3:
 			$nhacnen.stream =load("res://music/Last-Minute.ogg")
 		4:
@@ -837,17 +728,11 @@ func _on_bomber_animation_finished():
 	stunned = false
 
 func _on_Hitbox_body_entered(body):
-	#if body.is_in_group("enemy"):
-		#var explosion_instance = explosion4.instance()
-		#explosion_instance.position = get_global_position()
-		#get_tree().get_root().add_child(explosion_instance)
-	#	rpc("hit_by_damager", damage1)
 	pass
 func _on_dogy_animation_finished():
 	if speed ==0:
 		speed = 150
 	stunned2 = false
-
 
 func _on_ghosttimer_timeout():
 	if Tonghop.nhanvat=="map2" and velocity.x != 0:		

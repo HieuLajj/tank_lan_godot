@@ -176,7 +176,7 @@ radius = 21.095
 
 [node name="godpowder" type="AnimatedSprite"]
 frames = SubResource( 67 )
-frame = 15
+frame = 30
 playing = true
 script = ExtResource( 2 )
 

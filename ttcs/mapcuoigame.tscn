@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=2]
+[gd_scene load_steps=99 format=2]
 
 [ext_resource path="res://mapPack/jungle/tile_jungle_ground_brown.png" type="Texture" id=1]
 [ext_resource path="res://Cameramapcuoi.gd" type="Script" id=2]
@@ -140,6 +140,42 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=82]
 shader = SubResource( 81 )
 shader_param/bg_color = null
+
+[sub_resource type="Shader" id=83]
+code = "shader_type canvas_item;
+
+uniform float Strength : hint_range(0,20) = 3;
+uniform float RandomOffset = 1f;
+
+float random( float seed )
+{
+	return fract( 543.2543 * sin( dot( vec2( seed, seed ), vec2( 3525.46 + RandomOffset, -54.3415 ) ) ) );
+}
+
+void vertex()
+{
+	vec2 VERTEX_OFFSET = VERTEX;
+	VERTEX_OFFSET.x += (
+		random(
+			( trunc( VERTEX_OFFSET.y))
+		+	TIME
+		) - 0.5
+	) * Strength ;
+
+	VERTEX_OFFSET.y += (
+		random(
+			( trunc( VERTEX_OFFSET.x))
+		+	TIME
+		) - 0.5
+	) * Strength;
+	
+	VERTEX = VERTEX_OFFSET;	
+}"
+
+[sub_resource type="ShaderMaterial" id=84]
+shader = SubResource( 83 )
+shader_param/Strength = 3.0
+shader_param/RandomOffset = 1.0
 
 [sub_resource type="DynamicFont" id=1]
 size = 39
@@ -2713,6 +2749,7 @@ __meta__ = {
 }
 
 [node name="Winner" type="Label" parent="Game_UI2/Control"]
+material = SubResource( 84 )
 anchor_top = 0.478
 anchor_right = 1.0
 anchor_bottom = 0.719

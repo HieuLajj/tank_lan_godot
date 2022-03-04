@@ -38,7 +38,6 @@ func _process(delta):
 				known_servers[server_ip] = gameInfo
 				emit_signal("new_server",gameInfo)
 				print(socket_udp.get_packet_ip())
-				print("bbb")
 			else:
 				var gameInfo = known_servers[server_ip]
 				gameInfo.lastSeen = OS.get_unix_time()
