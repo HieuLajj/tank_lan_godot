@@ -49,9 +49,9 @@ func reset_network_connection() -> void:
 func disconnect_server() -> void:
 	#get_tree().network_peer = null
 	#get_tree().get_network_unique_id()
+	_player_disconnected2(get_tree().get_network_unique_id())
 	if get_tree().is_network_server():
 		server.close_connection(1)
-	_player_disconnected2(get_tree().get_network_unique_id())
 	for child in Persistent_nodes.get_children():
 		if child.is_in_group("Net"):
 			child.queue_free()

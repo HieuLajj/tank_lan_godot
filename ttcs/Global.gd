@@ -10,6 +10,10 @@ var camera = null
 
 var points = 0
 var highscore = 0
+#minigame2
+var levels = []
+var unlockedLevels = 1
+var selected_gun =1
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
 	node_instance.global_position = location

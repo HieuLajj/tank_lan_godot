@@ -336,7 +336,7 @@ animations = [ {
 position = Vector2( 0.999992, -3.8147e-06 )
 scale = Vector2( 0.859375, 0.841797 )
 frames = SubResource( 65 )
-frame = 56
+frame = 29
 playing = true
 script = ExtResource( 2 )
 

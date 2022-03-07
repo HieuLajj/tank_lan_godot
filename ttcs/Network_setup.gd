@@ -147,3 +147,8 @@ func _on_Button_pressed():
 	Network.disconnect_server()
 	Network.refresh()
 	device_ip_address.text = Network.ip_address
+
+
+func _on_war_pressed():
+	audio.play()
+	get_tree().change_scene("res://gameoffline2/mainarmy.tscn")

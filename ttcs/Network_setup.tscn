@@ -256,6 +256,7 @@ volume_db = 8.5
 [connection signal="pressed" from="Multiplayer_configure/Create_server" to="." method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Multiplayer_configure/join_server" to="." method="_on_join_server_pressed"]
 [connection signal="pressed" from="Multiplayer_configure/Campaign" to="." method="_on_Campaign_pressed"]
+[connection signal="pressed" from="Multiplayer_configure/war" to="." method="_on_war_pressed"]
 [connection signal="pressed" from="UI/Start_game" to="." method="_on_Start_game_pressed"]
 [connection signal="pressed" from="chatbox/posttext" to="." method="_on_posttext_pressed"]
 [connection signal="pressed" from="chatbox/Button" to="." method="_on_Button_pressed"]

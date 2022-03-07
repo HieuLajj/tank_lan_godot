@@ -11,6 +11,7 @@ var kiemtraminigame=1
 # var a = 2
 # var b = "text"
 var mm=1
+var m=1
 # Called when the node enters the scene tree for the first time.
 func hom()-> void:
 	print("nguenlahef")
