@@ -1,0 +1,20 @@
+{
+	"color": "#fff90bf5",
+	"description": "",
+	"display_name": "",
+	"display_name_bool": false,
+	"id": "character-1646819309.json",
+	"mirror_portraits": false,
+	"name": "NPC",
+	"nickname": "",
+	"nickname_bool": false,
+	"offset_x": 0,
+	"offset_y": 0,
+	"portraits": [
+		{
+			"name": "Default",
+			"path": ""
+		}
+	],
+	"scale": 100
+}

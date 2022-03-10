@@ -1,0 +1,613 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://music/win2.wav" type="AudioStream" id=3]
+[ext_resource path="res://minigame/minigame1/Cameramapcuoi.gd" type="Script" id=4]
+[ext_resource path="res://bando/Winner.gd" type="Script" id=5]
+[ext_resource path="res://Script/UI.gd" type="Script" id=6]
+[ext_resource path="res://minigame/minigame4/rock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://mapPack/brickfloor.png" type="Texture" id=8]
+[ext_resource path="res://mapPack/Interiors_free/48x48/Room_Builder_free_48x48.png" type="Texture" id=9]
+[ext_resource path="res://minigame/minigame4/bombminigame.gd" type="Script" id=10]
+[ext_resource path="res://minigame/minigame2/Game_UI3.gd" type="Script" id=11]
+
+[sub_resource type="Shader" id=8]
+code = "
+shader_type canvas_item;
+
+uniform float angle = -0.3;
+uniform float position = -0.2;
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform float cutoff : hint_range(-1.0, 1.0) = 0.1;
+uniform float falloff : hint_range(0.0, 1.0) = 0.2;
+uniform float edge_fade : hint_range(0.0, 1.0) = 0.15;
+
+uniform float speed = 1.0;
+uniform float ray1_density = 8.0;
+uniform float ray2_density = 30.0;
+uniform float ray2_intensity : hint_range(0.0, 1.0) = 0.3;
+
+uniform vec4 color : hint_color = vec4(1.0, 0.9, 0.65, 0.8);
+
+uniform bool hdr = false;
+uniform float seed = 5.0;
+
+// Random and noise functions from Book of Shader's chapter on Noise.
+float random(vec2 _uv) {
+    return fract(sin(dot(_uv.xy,
+                         vec2(12.9898, 78.233))) *
+        43758.5453123);
+}
+
+float noise (in vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+
+    // Smooth Interpolation
+
+    // Cubic Hermine Curve. Same as SmoothStep()
+    vec2 u = f * f * (3.0-2.0 * f);
+
+    // Mix 4 coorners percentages
+    return mix(a, b, u.x) +
+            (c - a)* u.y * (1.0 - u.x) +
+            (d - b) * u.x * u.y;
+}
+
+mat2 rotate(float _angle){
+    return mat2(vec2(cos(_angle), -sin(_angle)),
+                vec2(sin(_angle), cos(_angle)));
+}
+
+vec4 screen(vec4 base, vec4 blend){
+	return 1.0 - (1.0 - base) * (1.0 - blend);
+}
+
+void fragment()
+{
+	
+	// Rotate, skew and move the UVs
+	vec2 transformed_uv = ( rotate(angle) * (UV - position) )  / ( (UV.y + spread) - (UV.y * spread) );
+	
+	// Animate the ray according the the new transformed UVs
+	vec2 ray1 = vec2(transformed_uv.x * ray1_density + sin(TIME * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	vec2 ray2 = vec2(transformed_uv.x * ray2_density + sin(TIME * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	
+	// Cut off the ray's edges
+	float cut = step(cutoff, transformed_uv.x) * step(cutoff, 1.0 - transformed_uv.x);
+	ray1 *= cut;
+	ray2 *= cut;
+	
+	// Apply the noise pattern (i.e. create the rays)
+	float rays;
+	
+	if (hdr){
+		// This is not really HDR, but check this to not clamp the two merged rays making 
+		// their values go over 1.0. Can make for some nice effect
+		rays = noise(ray1) + (noise(ray2) * ray2_intensity);
+	}
+	else{
+		 rays = clamp(noise(ray1) + (noise(ray2) * ray2_intensity), 0., 1.);
+	}
+	
+	// Fade out edges
+	rays *= smoothstep(0.0, falloff, (1.0 - UV.y)); // Bottom
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, transformed_uv.x); // Left
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, 1.0 - transformed_uv.x); // Right
+	
+	// Color to the rays
+	vec3 shine = vec3(rays) * color.rgb;
+
+	// Try different blending modes for a nicer effect. \"Screen\" is included in the code,
+	// but take a look at https://godotshaders.com/snippet/blending-modes/ for more.
+	// With \"Screen\" blend mode:
+	shine = screen(texture(SCREEN_TEXTURE, SCREEN_UV), vec4(color)).rgb;
+	
+	COLOR = vec4(shine, rays * color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/angle = -0.3
+shader_param/position = -0.2
+shader_param/spread = 0.5
+shader_param/cutoff = 0.1
+shader_param/falloff = 0.2
+shader_param/edge_fade = 0.15
+shader_param/speed = 1.0
+shader_param/ray1_density = 8.0
+shader_param/ray2_density = 30.0
+shader_param/ray2_intensity = 0.3
+shader_param/color = Color( 1, 0.9, 0.65, 0.8 )
+shader_param/hdr = false
+shader_param/seed = 5.0
+
+[sub_resource type="ConvexPolygonShape2D" id=10]
+points = PoolVector2Array( 0, 0, 48, 0, 48, 48, 0, 48 )
+
+[sub_resource type="ConvexPolygonShape2D" id=11]
+points = PoolVector2Array( 0, 0, 48, 0, 48, 48, 0, 48 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "brickfloor.png 0"
+0/texture = ExtResource( 8 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 48, 48 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 10 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 10 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+1/name = "room"
+1/texture = ExtResource( 9 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 528, 240, 48, 48 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape = SubResource( 11 )
+1/shape_one_way = false
+1/shape_one_way_margin = 1.0
+1/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 11 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+1/z_index = 0
+2/name = "Room_Builder"
+2/texture = ExtResource( 9 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 720, 144, 48, 48 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+
+[sub_resource type="Shader" id=12]
+code = "shader_type canvas_item;
+
+uniform float Strength : hint_range(0,20) = 3;
+uniform float RandomOffset = 1f;
+
+float random( float seed )
+{
+	return fract( 543.2543 * sin( dot( vec2( seed, seed ), vec2( 3525.46 + RandomOffset, -54.3415 ) ) ) );
+}
+
+void vertex()
+{
+	vec2 VERTEX_OFFSET = VERTEX;
+	VERTEX_OFFSET.x += (
+		random(
+			( trunc( VERTEX_OFFSET.y))
+		+	TIME
+		) - 0.5
+	) * Strength ;
+
+	VERTEX_OFFSET.y += (
+		random(
+			( trunc( VERTEX_OFFSET.x))
+		+	TIME
+		) - 0.5
+	) * Strength;
+	
+	VERTEX = VERTEX_OFFSET;	
+}"
+
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 12 )
+shader_param/Strength = 3.0
+shader_param/RandomOffset = 1.0
+
+[sub_resource type="DynamicFont" id=5]
+size = 39
+outline_size = 4
+outline_color = Color( 0.0196078, 0.0196078, 0.0196078, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="Shader" id=6]
+code = "// Fireworks shader
+// Based on shadertoy shader by Martijn Steinrucken aka BigWings - 2015 
+// (https://www.shadertoy.com/view/lscGRl)
+
+shader_type canvas_item;
+
+uniform float PI = 3.141592653589793238;
+uniform float TWOPI = 6.283185307179586 ;
+uniform float NUM_EXPLOSIONS = 8.0;
+uniform float NUM_PARTICLES = 70.0;
+
+// Noise functions by Dave Hoskins
+
+uniform vec3 MOD3 = vec3(0.1031,0.11369,0.13787);
+
+vec3 hash31(float p) {
+   vec3 p3 = fract(vec3(p) * MOD3);
+   p3 += dot(p3, p3.yzx + 19.19);
+   return fract(vec3((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y, (p3.y+p3.z)*p3.x));
+}
+
+float hash12(vec2 p) // attention changement vec2 p en vec3
+{
+                vec3 p3  = fract(vec3(p.xy, 0.0) * MOD3);
+    p3 += dot(p3, p3.yzx + 19.19);
+    return fract((p3.x + p3.y) * p3.z);
+}
+
+float circ(vec2 uv, vec2 pos, float size) {
+                uv -= pos;
+    
+    size *= size;
+    return smoothstep(size*1.1, size, dot(uv, uv));
+}
+
+float lighter(vec2 uv, vec2 pos, float size) {
+    uv -= pos;
+    size *= size;
+    return size/dot(uv, uv);
+}
+
+vec3 explosion(vec2 uv, vec2 p, float seed, float t) {
+                
+    vec3 col = vec3(0.);
+    
+    vec3 en = hash31(seed);
+    vec3 baseCol = en;
+    for(float i=0.; i<NUM_PARTICLES; i++) {
+               vec3 n = hash31(i)-.5;
+       
+                               vec2 startP = p-vec2(0., t*t*.1);        
+        vec2 endP = startP+normalize(n.xy)*n.z;
+        
+        
+        float pt = 1.-pow(t-1., 2.);
+        vec2 pos = mix(p, endP, pt);    
+        float size = mix(.01, .005, smoothstep(0., .1, pt));
+        size *= smoothstep(1., .1, pt);
+        
+        float sparkle = (sin((pt+n.z)*100.)*.5+.5);
+        sparkle = pow(sparkle, pow(en.x, 3.)*50.)*mix(0.01, .01, en.y*n.y);
+		float B = smoothstep(en.x-en.z, en.x+en.z, t)*smoothstep(en.y+en.z, en.y-en.z, t);
+        size += sparkle*B;
+        
+        col += baseCol*lighter(uv, pos, size);
+    }
+    
+    return col;
+}
+
+
+void fragment() {
+    vec2 iResolution = vec2(1024,600);
+	vec2 uv = FRAGCOORD.xy / iResolution.xy;
+                uv.x -= .5;
+    uv.x *= iResolution.x/iResolution.y;
+    
+    float n = hash12(uv+10.0);
+    float t = TIME*.5;
+    
+    vec3 c = vec3(0.);
+    
+    for(float i=0.; i<NUM_EXPLOSIONS; i++) {
+               float et = t+i*1234.45235;
+        float id = floor(et);
+        et -= id;
+        
+        vec2 p = hash31(id).xy;
+        p.x -= .5;
+        p.x *= 1.6;
+        c += explosion(uv, p, id, et);
+		}
+    
+	float alpha = 1.0;
+//	if (c.x < 0.2){alpha=0.0;} 
+    COLOR = vec4(c, alpha);
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/PI = 3.14159
+shader_param/TWOPI = 6.28319
+shader_param/NUM_EXPLOSIONS = 8.0
+shader_param/NUM_PARTICLES = 70.0
+shader_param/MOD3 = Vector3( 0.1031, 0.11369, 0.13787 )
+
+[node name="bombminigame" type="Node2D"]
+script = ExtResource( 10 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 9 )
+position = Vector2( -260, -33 )
+scale = Vector2( 10, 15 )
+z_index = -50
+texture = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = -90
+tile_set = SubResource( 2 )
+cell_size = Vector2( 48, 48 )
+format = 1
+tile_data = PoolIntArray( -393228, 1, 0, -393227, 1, 0, -393226, 1, 0, -393225, 1, 0, -393224, 1, 0, -393223, 1, 0, -393222, 1, 0, -393221, 1, 0, -393220, 1, 0, -393219, 1, 0, -393218, 1, 0, -393217, 1, 0, -458752, 1, 0, -458751, 1, 0, -458750, 1, 0, -458749, 1, 0, -458748, 1, 0, -458747, 1, 0, -458746, 1, 0, -458745, 1, 0, -458744, 1, 0, -458743, 1, 0, -458742, 1, 0, -458741, 1, 0, -327692, 1, 0, -327689, 1, 0, -327687, 1, 0, -327685, 1, 0, -393213, 1, 0, -393209, 1, 0, -393208, 1, 0, -393205, 1, 0, -262156, 1, 0, -262147, 1, 0, -262145, 1, 0, -327679, 1, 0, -327673, 1, 0, -327669, 1, 0, -196620, 1, 0, -196619, 1, 0, -196617, 1, 0, -196615, 1, 0, -196614, 1, 0, -196613, 1, 0, -196611, 1, 0, -262141, 1, 0, -262140, 1, 0, -262139, 1, 0, -262135, 1, 0, -262133, 1, 0, -131084, 1, 0, -131075, 1, 0, -131073, 1, 0, -196608, 1, 0, -196607, 1, 0, -196601, 1, 0, -196599, 1, 0, -196597, 1, 0, -65548, 1, 0, -65547, 1, 0, -65545, 1, 0, -65543, 1, 0, -65541, 1, 0, -131069, 1, 0, -131065, 1, 0, -131061, 1, 0, -12, 1, 0, -3, 1, 0, -1, 1, 0, -65536, 1, 0, -65535, 1, 0, -65533, 1, 0, -65532, 1, 0, -65530, 1, 0, -65529, 1, 0, -65527, 1, 0, -65525, 1, 0, 65524, 1, 0, 65527, 1, 0, 65528, 1, 0, 65529, 1, 0, 65531, 1, 0, 3, 1, 0, 11, 1, 0, 131060, 1, 0, 131061, 1, 0, 131067, 1, 0, 131069, 1, 0, 131070, 1, 0, 131071, 1, 0, 65536, 1, 0, 65545, 1, 0, 65547, 1, 0, 196596, 1, 0, 196599, 1, 0, 196601, 1, 0, 196603, 1, 0, 131075, 1, 0, 131078, 1, 0, 131079, 1, 0, 131081, 1, 0, 131082, 1, 0, 131083, 1, 0, 262132, 1, 0, 262133, 1, 0, 262137, 1, 0, 262141, 1, 0, 262142, 1, 0, 196608, 1, 0, 196610, 1, 0, 196611, 1, 0, 196619, 1, 0, 327668, 1, 0, 327671, 1, 0, 327673, 1, 0, 327675, 1, 0, 327677, 1, 0, 262149, 1, 0, 262152, 1, 0, 262155, 1, 0, 393204, 1, 0, 327680, 1, 0, 327682, 1, 0, 327685, 1, 0, 327686, 1, 0, 327691, 1, 0, 458740, 1, 0, 458741, 1, 0, 458742, 1, 0, 458743, 1, 0, 458744, 1, 0, 458745, 1, 0, 458746, 1, 0, 458747, 1, 0, 458748, 1, 0, 458749, 1, 0, 458750, 1, 0, 458751, 1, 0, 393216, 1, 0, 393217, 1, 0, 393218, 1, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393227, 1, 0 )
+
+[node name="Cameramapcuoi" type="Camera2D" parent="."]
+position = Vector2( 0, -1 )
+current = true
+script = ExtResource( 4 )
+
+[node name="Spawn_locations" type="Node" parent="."]
+
+[node name="1" type="Position2D" parent="Spawn_locations"]
+position = Vector2( -494, -243 )
+
+[node name="2" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 441, -242 )
+
+[node name="3" type="Position2D" parent="Spawn_locations"]
+position = Vector2( -486, 248 )
+
+[node name="4" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 462, 247 )
+
+[node name="5" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 456, -243 )
+
+[node name="6" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 6, 5 )
+
+[node name="rocks" type="Node2D" parent="."]
+
+[node name="rock" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -457, -170 )
+
+[node name="rock2" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -408, -214 )
+
+[node name="rock3" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -455, -73 )
+
+[node name="rock4" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -455, 69 )
+
+[node name="rock5" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -455, -24 )
+
+[node name="rock6" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -359, -26 )
+
+[node name="rock7" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -360, -75 )
+
+[node name="rock8" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -264, -116 )
+
+[node name="rock9" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -313, -119 )
+
+[node name="rock10" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -310, -215 )
+
+[node name="rock11" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -358, -168 )
+
+[node name="rock12" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -170, -213 )
+
+[node name="rock13" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -165, -265 )
+
+[node name="rock14" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -116, -262 )
+
+[node name="rock15" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -458, 123 )
+
+[node name="rock16" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -410, 169 )
+
+[node name="rock17" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -406, 268 )
+
+[node name="rock18" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -357, 218 )
+
+[node name="rock19" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -361, 78 )
+
+[node name="rock20" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 360, -166 )
+
+[node name="rock21" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 405, -168 )
+
+[node name="rock22" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 456, 24 )
+
+[node name="rock23" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 456, -72 )
+
+[node name="rock25" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 409, -70 )
+
+[node name="rock26" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 363, 69 )
+
+[node name="rock27" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 310, 24 )
+
+[node name="rock28" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 456, 171 )
+
+[node name="rock29" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 504, 171 )
+
+[node name="rock30" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 363, 259 )
+
+[node name="rock31" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 213, 222 )
+
+[node name="rock32" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 165, 216 )
+
+[node name="rock33" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 219, 168 )
+
+[node name="rock34" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 264, 168 )
+
+[node name="rock35" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 360, 168 )
+
+[node name="rock36" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 313, 168 )
+
+[node name="rock37" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 166, 72 )
+
+[node name="rock38" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 119, 24 )
+
+[node name="rock39" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -25, 125 )
+
+[node name="rock40" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -265, 262 )
+
+[node name="rock41" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -265, 164 )
+
+[node name="rock42" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -270, 78 )
+
+[node name="rock43" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 23, -258 )
+
+[node name="rock44" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 23, -171 )
+
+[node name="rock45" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -69, -171 )
+
+[node name="rock46" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -169, -73 )
+
+[node name="rock47" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 312, -169 )
+
+[node name="rock48" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -24, 23 )
+
+[node name="rock49" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -169, 261 )
+
+[node name="rock50" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -166, 119 )
+
+[node name="rock51" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -120, 24 )
+
+[node name="rock52" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -73, -73 )
+
+[node name="rock53" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 20, -72 )
+
+[node name="rock54" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 117, -72 )
+
+[node name="rock55" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 71, 217 )
+
+[node name="rock56" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( -25, 216 )
+
+[node name="rock57" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 265, 69 )
+
+[node name="rock58" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 216, -120 )
+
+[node name="rock59" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 217, -217 )
+
+[node name="rock60" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 166, -217 )
+
+[node name="rock61" parent="rocks" instance=ExtResource( 7 )]
+position = Vector2( 119, -169 )
+
+[node name="Game_UI3" type="CanvasLayer" parent="."]
+script = ExtResource( 11 )
+
+[node name="winnermusic" type="AudioStreamPlayer" parent="Game_UI3"]
+stream = ExtResource( 3 )
+
+[node name="Control" type="Control" parent="Game_UI3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Winner" type="Label" parent="Game_UI3/Control"]
+material = SubResource( 13 )
+anchor_top = 0.478
+anchor_right = 1.0
+anchor_bottom = 0.719
+margin_top = 0.0399933
+margin_bottom = -63.08
+custom_fonts/font = SubResource( 5 )
+text = "Winner Winner Boomer !
+"
+align = 1
+valign = 1
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Win_timer" type="Timer" parent="Game_UI3/Control/Winner"]
+wait_time = 10.0
+
+[node name="Sprite" type="Sprite" parent="Game_UI3/Control/Winner"]
+material = SubResource( 7 )
+position = Vector2( 321, 6.00001 )
+scale = Vector2( 10.125, 5.125 )
+z_index = -1
+texture = ExtResource( 2 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 6 )
+
+[connection signal="timeout" from="Game_UI3/Control/Winner/Win_timer" to="Game_UI3/Control/Winner" method="_on_Win_timer_timeout"]

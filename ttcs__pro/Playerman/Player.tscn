@@ -1,0 +1,587 @@
+[gd_scene load_steps=104 format=2]
+
+[ext_resource path="res://Playerman/Player.gd" type="Script" id=1]
+[ext_resource path="res://music/trung.ogg" type="AudioStream" id=2]
+[ext_resource path="res://mapPack/tankaa/tank2-removebg-preview.png" type="Texture" id=3]
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://music/nhatcoin.wav" type="AudioStream" id=5]
+[ext_resource path="res://mapPack/ninjavan/Jump__001.png" type="Texture" id=6]
+[ext_resource path="res://mapPack/betty.png" type="Texture" id=7]
+[ext_resource path="res://mapPack/ninjavan/Run__002.png" type="Texture" id=8]
+[ext_resource path="res://music/gun.ogg" type="AudioStream" id=9]
+[ext_resource path="res://mapPack/ninjavan/Run__000.png" type="Texture" id=10]
+[ext_resource path="res://mapPack/ninjavan/Idle__003.png" type="Texture" id=11]
+[ext_resource path="res://mapPack/ninjavan/Idle__002.png" type="Texture" id=12]
+[ext_resource path="res://mapPack/ninjavan/Idle__004.png" type="Texture" id=13]
+[ext_resource path="res://mapPack/ninjavan/Idle__009.png" type="Texture" id=14]
+[ext_resource path="res://mapPack/speaker.png" type="Texture" id=15]
+[ext_resource path="res://mapPack/ninjavan/Run__004.png" type="Texture" id=16]
+[ext_resource path="res://mapPack/ninjavan/Run__001.png" type="Texture" id=17]
+[ext_resource path="res://mapPack/ninjavan/Run__007.png" type="Texture" id=18]
+[ext_resource path="res://mapPack/ninjavan/Idle__000.png" type="Texture" id=19]
+[ext_resource path="res://mapPack/ninjavan/Idle__007.png" type="Texture" id=20]
+[ext_resource path="res://mapPack/ninjavan/Idle__008.png" type="Texture" id=21]
+[ext_resource path="res://mapPack/ninjavan/Jump__007.png" type="Texture" id=22]
+[ext_resource path="res://mapPack/ninjavan/Jump__006.png" type="Texture" id=23]
+[ext_resource path="res://mapPack/ninjavan/Idle__006.png" type="Texture" id=24]
+[ext_resource path="res://mapPack/ninjavan/Idle__001.png" type="Texture" id=25]
+[ext_resource path="res://mapPack/ninjavan/Jump__000.png" type="Texture" id=26]
+[ext_resource path="res://mapPack/ninjavan/Idle__005.png" type="Texture" id=27]
+[ext_resource path="res://mapPack/ninjavan/Run__005.png" type="Texture" id=28]
+[ext_resource path="res://mapPack/ninjavan/Run__008.png" type="Texture" id=29]
+[ext_resource path="res://mapPack/ninjavan/Jump__005.png" type="Texture" id=30]
+[ext_resource path="res://mapPack/flappybird/Planes/planeYellow2.png" type="Texture" id=31]
+[ext_resource path="res://mapPack/ninjavan/Run__006.png" type="Texture" id=32]
+[ext_resource path="res://mapPack/ninjavan/Jump__008.png" type="Texture" id=33]
+[ext_resource path="res://mapPack/flappybird/Planes/planeYellow1.png" type="Texture" id=34]
+[ext_resource path="res://mapPack/kobold-soldier-002.png" type="Texture" id=35]
+[ext_resource path="res://mapPack/ninjavan/Jump__003.png" type="Texture" id=36]
+[ext_resource path="res://music/Last-Minute.ogg" type="AudioStream" id=37]
+[ext_resource path="res://mapPack/ninjavan/Jump__009.png" type="Texture" id=38]
+[ext_resource path="res://mapPack/ninjavan/Run__009.png" type="Texture" id=39]
+[ext_resource path="res://mapPack/flappybird/Planes/planeYellow3.png" type="Texture" id=40]
+[ext_resource path="res://mapPack/pngki.png" type="Texture" id=41]
+[ext_resource path="res://mapPack/ninjavan/Jump__004.png" type="Texture" id=42]
+[ext_resource path="res://mapPack/low.png" type="Texture" id=43]
+[ext_resource path="res://mapPack/pause.png" type="Texture" id=44]
+[ext_resource path="res://mapPack/change.png" type="Texture" id=45]
+[ext_resource path="res://music/tienganchuot.wav" type="AudioStream" id=46]
+[ext_resource path="res://mapPack/ninjavan/Jump__002.png" type="Texture" id=47]
+[ext_resource path="res://mapPack/ninjavan/Run__003.png" type="Texture" id=48]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 19.7438, 19.7266 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 26
+font_data = ExtResource( 4 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 19 ), ExtResource( 25 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "idle",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 6 ), ExtResource( 47 ), ExtResource( 36 ), ExtResource( 42 ), ExtResource( 30 ), ExtResource( 23 ), ExtResource( 22 ), ExtResource( 33 ), ExtResource( 38 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 17 ), ExtResource( 8 ), ExtResource( 48 ), ExtResource( 16 ), ExtResource( 28 ), ExtResource( 32 ), ExtResource( 18 ), ExtResource( 29 ), ExtResource( 39 ) ],
+"loop": true,
+"name": "run",
+"speed": 20.0
+} ]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 34 ), ExtResource( 31 ), ExtResource( 40 ) ],
+"loop": true,
+"name": "idle2",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 96, 48, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 96, 96, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 96, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 48, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 96, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=26]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 144, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 48, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 96, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 0, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 144, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 144, 48, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 144, 96, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 144, 144, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 48, 48, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 48, 96, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 7 )
+region = Rect2( 48, 144, 48, 48 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"loop": true,
+"name": "luisau",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
+"loop": true,
+"name": "trungbomb",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "tienlen",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
+"loop": true,
+"name": "sangphai",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "sangtrai",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=40]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=41]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=42]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=43]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=44]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=45]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=46]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=47]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=48]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=49]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=50]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=51]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=52]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=53]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=54]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=55]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=30]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=32]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=33]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=34]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=35]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 128, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=27]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=28]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 192, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=36]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 0, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=37]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 48, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=38]
+flags = 4
+atlas = ExtResource( 35 )
+region = Rect2( 96, 0, 48, 64 )
+
+[sub_resource type="SpriteFrames" id=39]
+animations = [ {
+"frames": [ SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ) ],
+"loop": true,
+"name": "trung",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ) ],
+"loop": true,
+"name": "phai",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "tien",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
+"loop": true,
+"name": "trai",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 36 ), SubResource( 37 ), SubResource( 38 ) ],
+"loop": true,
+"name": "lui",
+"speed": 5.0
+} ]
+
+[node name="Player" type="KinematicBody2D" groups=["Net", "Player", "nguoichoi"]]
+scale = Vector2( 1.18634, 1.32867 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 1.49012e-08 )
+scale = Vector2( 0.169625, 0.122782 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.84293, 0 )
+scale = Vector2( 0.653836, 0.656278 )
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Network_tick_rate" type="Timer" parent="."]
+wait_time = 0.03
+autostart = true
+
+[node name="Reload_timer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="Hit_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="Shoot_point" type="Position2D" parent="."]
+position = Vector2( 18.5444, 0 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -3.8147e-06, 0 )
+scale = Vector2( 0.661593, 0.586488 )
+shape = SubResource( 1 )
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="trungroi" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+autoplay = true
+
+[node name="nhacnen" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 37 )
+
+[node name="Heal_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="menu" type="VBoxContainer" parent="CanvasLayer"]
+visible = false
+margin_left = 194.0
+margin_top = 105.0
+margin_right = 687.0
+margin_bottom = 373.0
+rect_scale = Vector2( 0.479458, 0.537737 )
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/menu"]
+margin_right = 493.0
+margin_bottom = 29.0
+custom_fonts/font = SubResource( 2 )
+text = "Paused"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/menu"]
+margin_top = 39.0
+margin_right = 493.0
+margin_bottom = 145.0
+custom_constants/separation = 12
+
+[node name="giamamluong" type="Button" parent="CanvasLayer/menu/HBoxContainer"]
+margin_right = 112.0
+margin_bottom = 106.0
+custom_fonts/font = SubResource( 3 )
+icon = ExtResource( 43 )
+
+[node name="tangamluong" type="Button" parent="CanvasLayer/menu/HBoxContainer"]
+margin_left = 124.0
+margin_right = 236.0
+margin_bottom = 106.0
+custom_constants/hseparation = 0
+custom_fonts/font = SubResource( 3 )
+icon = ExtResource( 15 )
+
+[node name="chuyenbainen" type="Button" parent="CanvasLayer/menu/HBoxContainer"]
+margin_left = 248.0
+margin_right = 360.0
+margin_bottom = 106.0
+custom_constants/hseparation = 0
+custom_fonts/font = SubResource( 3 )
+icon = ExtResource( 45 )
+
+[node name="chuyenchedo" type="Button" parent="CanvasLayer/menu/HBoxContainer"]
+margin_left = 372.0
+margin_right = 484.0
+margin_bottom = 106.0
+custom_constants/hseparation = 0
+custom_fonts/font = SubResource( 3 )
+icon = ExtResource( 44 )
+
+[node name="Resume_game" type="Button" parent="CanvasLayer/menu"]
+margin_top = 155.0
+margin_right = 493.0
+margin_bottom = 186.0
+custom_fonts/font = SubResource( 3 )
+text = "Resume game"
+
+[node name="Back_lobby" type="Button" parent="CanvasLayer/menu"]
+margin_top = 196.0
+margin_right = 493.0
+margin_bottom = 227.0
+custom_fonts/font = SubResource( 3 )
+text = "Back lobby"
+
+[node name="Quit_game" type="Button" parent="CanvasLayer/menu"]
+margin_top = 237.0
+margin_right = 493.0
+margin_bottom = 268.0
+custom_fonts/font = SubResource( 3 )
+text = "Quit game"
+
+[node name="ninja" type="AnimatedSprite" parent="."]
+visible = false
+scale = Vector2( 0.0772613, 0.0567627 )
+frames = SubResource( 4 )
+animation = "run"
+frame = 5
+playing = true
+
+[node name="audio2" type="AudioStreamPlayer" parent="."]
+
+[node name="plane" type="AnimatedSprite" parent="."]
+visible = false
+scale = Vector2( 0.454214, 0.401928 )
+frames = SubResource( 5 )
+animation = "idle2"
+playing = true
+
+[node name="bomber" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( -2.5, -6 )
+scale = Vector2( 1.02262, 0.977132 )
+frames = SubResource( 10 )
+animation = "tienlen"
+playing = true
+
+[node name="dogy" type="AnimatedSprite" parent="."]
+visible = false
+scale = Vector2( 0.579627, 0.456673 )
+frames = SubResource( 39 )
+animation = "tien"
+playing = true
+
+[node name="Light2D" type="Light2D" parent="dogy"]
+position = Vector2( 1.90735e-06, -0.999998 )
+scale = Vector2( 0.221319, 0.177603 )
+texture = ExtResource( 41 )
+energy = 0.9
+
+[node name="audio33" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="ghosttimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="BounceRaycast" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="BounceRaycast"]
+cast_to = Vector2( 0, 10 )
+collision_mask = 4
+collide_with_areas = true
+
+[node name="audiomenu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 46 )
+
+[connection signal="timeout" from="Network_tick_rate" to="." method="_on_Network_tick_rate_timeout"]
+[connection signal="timeout" from="Reload_timer" to="." method="_on_Reload_timer_timeout"]
+[connection signal="timeout" from="Hit_timer" to="." method="_on_Hit_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
+[connection signal="finished" from="audio" to="." method="_on_audio_finished"]
+[connection signal="pressed" from="CanvasLayer/menu/HBoxContainer/giamamluong" to="." method="_on_giamamluong_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu/HBoxContainer/tangamluong" to="." method="_on_tangamluong_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu/HBoxContainer/chuyenbainen" to="." method="_on_chuyenbainen_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu/HBoxContainer/chuyenchedo" to="." method="_on_chuyenchedo_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu/Resume_game" to="." method="_on_Resume_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu/Back_lobby" to="." method="_on_Back_lobby_pressed"]
+[connection signal="pressed" from="CanvasLayer/menu/Quit_game" to="." method="_on_Quit_game_pressed"]
+[connection signal="animation_finished" from="bomber" to="." method="_on_bomber_animation_finished"]
+[connection signal="animation_finished" from="dogy" to="." method="_on_dogy_animation_finished"]
+[connection signal="timeout" from="ghosttimer" to="." method="_on_ghosttimer_timeout"]

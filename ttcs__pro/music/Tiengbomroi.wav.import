@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Tiengbomroi.wav-2aa11be997ba0bda15d65d12c61daddf.sample"
+
+[deps]
+
+source_file="res://music/Tiengbomroi.wav"
+dest_files=[ "res://.import/Tiengbomroi.wav-2aa11be997ba0bda15d65d12c61daddf.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

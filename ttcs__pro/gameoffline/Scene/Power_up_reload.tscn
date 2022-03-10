@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://mapPack/Square.png" type="Texture" id=1]
+[ext_resource path="res://gameoffline/Script/Power_up.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Power_up_reload" type="Sprite"]
+modulate = Color( 0.321569, 0.941176, 0.0392157, 1 )
+rotation = 0.785398
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+player_variable_modify = "reload_speed"
+player_variable_set = 0.02
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+scale = Vector2( 0.74672, 0.752014 )
+shape = SubResource( 1 )
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

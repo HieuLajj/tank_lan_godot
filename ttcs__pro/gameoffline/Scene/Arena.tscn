@@ -1,0 +1,117 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://gameoffline/Script/Arena.gd" type="Script" id=1]
+[ext_resource path="res://gameoffline/Scene/Power_up_reload.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gameoffline/Scene/Power_up_damage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gameoffline/Scene/Enemyy_3.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gameoffline/Scene/Enemyy_4.tscn" type="PackedScene" id=5]
+[ext_resource path="res://gameoffline/Scene/Enemyy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://gameoffline/Scene/Enemyy_2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://gameoffline/Scene/Enemyy_1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gameoffline/Scene/Enemyy_5.tscn" type="PackedScene" id=9]
+[ext_resource path="res://gameoffline/Scene/Playerr.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Font-chu-dep/Font-chu-dep/BreeSerif.otf" type="DynamicFontData" id=11]
+[ext_resource path="res://Font-chu-dep/Down Hill.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://gameoffline/Script/Highscore.gd" type="Script" id=13]
+[ext_resource path="res://gameoffline/Script/Score.gd" type="Script" id=14]
+[ext_resource path="res://gameoffline/Script/Camera2D1.gd" type="Script" id=15]
+[ext_resource path="res://music/tienganchuot.wav" type="AudioStream" id=16]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_bloom = 0.15
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 12 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 15
+font_data = ExtResource( 12 )
+
+[node name="Arena" type="Node2D"]
+script = ExtResource( 1 )
+enemies = [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 9 ) ]
+power_ups = [ ExtResource( 2 ), ExtResource( 3 ) ]
+
+[node name="Enemyy" parent="." instance=ExtResource( 6 )]
+position = Vector2( 122, 146 )
+
+[node name="Playerr" parent="." instance=ExtResource( 10 )]
+position = Vector2( 322, 171 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="back" type="Button" parent="."]
+margin_left = 585.0
+margin_top = 6.0
+margin_right = 633.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 2 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="Difficulty_timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Power_up_spawn_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="Score" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 285.0
+margin_top = 285.0
+margin_right = 326.0
+margin_bottom = 311.0
+rect_scale = Vector2( 1.64107, 1.06383 )
+custom_fonts/font = SubResource( 3 )
+text = "100"
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Highscore" type="Label" parent="."]
+margin_left = 376.0
+margin_top = 296.0
+margin_right = 435.0
+margin_bottom = 334.0
+rect_scale = Vector2( 1.12022, 1.12367 )
+custom_fonts/font = SubResource( 4 )
+text = "100"
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera2D1" type="Camera2D" parent="."]
+position = Vector2( 320, 159 )
+current = true
+script = ExtResource( 15 )
+
+[node name="Screen_shake_time" type="Timer" parent="Camera2D1"]
+one_shot = true
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]
+[connection signal="timeout" from="Enemy_spawn_timer" to="." method="_on_Enemy_spawn_timer_timeout"]
+[connection signal="timeout" from="Difficulty_timer" to="." method="_on_Difficulty_timer_timeout"]
+[connection signal="timeout" from="Power_up_spawn_timer" to="." method="_on_Power_up_spawn_timer_timeout"]
+[connection signal="timeout" from="Camera2D1/Screen_shake_time" to="Camera2D1" method="_on_Screen_shake_time_timeout"]

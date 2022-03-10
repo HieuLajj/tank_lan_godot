@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gameoffline/Scene/Enemyy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://gameoffline/Script/Enemyy_3.gd" type="Script" id=2]
+
+[node name="Enemyy_3" instance=ExtResource( 1 )]
+modulate = Color( 0.917647, 0.427451, 0.0705882, 1 )
+position = Vector2( -4.76837e-07, 4.76837e-07 )
+scale = Vector2( 4.17843, 3.79369 )
+script = ExtResource( 2 )
+point_value = 15

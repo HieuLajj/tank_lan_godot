@@ -1,0 +1,55 @@
+{
+	"events": [
+		{
+			"character": "character-1646819309.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Xin Chao !!! robo-chan"
+		},
+		{
+			"character": "character-1646819281.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Xin Chao NPC!"
+		},
+		{
+			"character": "character-1646819309.json",
+			"event_id": "dialogic_010",
+			"options": [
+
+			],
+			"portrait": "",
+			"question": "robo-chan ! ban co the tieu diet con cho khong lo kia khong?"
+		},
+		{
+			"choice": "Co",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"emit_signal": "yes",
+			"event_id": "dialogic_040"
+		},
+		{
+			"choice": "Yes",
+			"condition": "",
+			"definition": "",
+			"event_id": "dialogic_011",
+			"value": ""
+		},
+		{
+			"emit_signal": "no",
+			"event_id": "dialogic_040"
+		},
+		{
+			"event_id": "dialogic_013"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1646819406.json",
+		"name": "start"
+	}
+}
