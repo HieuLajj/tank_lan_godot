@@ -43,7 +43,7 @@ tracks/0/keys = {
 [node name="moving2" type="Node2D"]
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
-position = Vector2( 503.299, -110.93 )
+position = Vector2( -3, -1 )
 rotation = -0.770869
 scale = Vector2( 0.981132, 0.984852 )
 
@@ -53,9 +53,8 @@ scale = Vector2( 0.981132, 0.984852 )
 curve = SubResource( 2 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2( 503.299, -110.93 )
+position = Vector2( -3, -1 )
 rotation = -0.770869
-offset = 677.373
 rotate = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Path2D/PathFollow2D"]

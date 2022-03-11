@@ -17,7 +17,9 @@ var loopdamage = null
 var can_shoot = true
 var is_reloading = false
 
-var player_bullet = load("res://Playerman/Player_bullet.tscn")
+var player_bullet2 = load("res://Playerman/Player_bullet2.tscn")
+#var player_bullet1 = load("res://Playerman/Player_bullet.tscn")
+var player_bullet1
 var username_text = load("res://Playerman/Username_text.tscn")
 #hp day ne
 var hpdayne = load("res://Playerman/hpnhanvat.tscn")
@@ -34,8 +36,8 @@ var mau setget hp_set
 var hp_instance = null
 #trangthaitank
 var tankdo= null
+var sungdo = null
 #trangthaidan
-var bullet = preload("res://Playerman/Player_bullet.tscn")
 var gg = preload("res://mapPack/dannay/Fmothai.png")
 var ge = "fawefa"
 
@@ -45,13 +47,22 @@ var tankdohoa setget  tankdohoa_set
 puppet var puppet_hp =100 setget puppet_hp_set
 puppet var puppet_position = Vector2(0,0) setget puppet_position_set  #sereetter getter thiet lap no y ma
 puppet var puppet_velocity = Vector2()
+puppet var puppet_dan = 1
+puppet var puppet_xemxetdogiat
+puppet var puppet_chet
+var tinhieu =1
 puppet var puppet_rotation = 0
 puppet var puppet_username = "" setget puppet_username_set
 #remote var puppet_username = "" setget puppet_username_set
 puppet var puppet_mau = "" setget puppet_mau_set
 
 onready var tween = $Tween
-onready var sprite = $Sprite
+onready var sprite = $Node2d/Sprite
+onready var sprite2 = $Node2d/Sprite2
+onready var sprite3 = $Node2d/Sprite3
+onready var sprite5 = $Node2d/Sprite5
+onready var sprite4 = $Node2d/Sprite4
+onready var node = $Node2d
 onready var reload_timer = $Reload_timer
 onready var shoot_point =$Shoot_point
 onready var hit_timer =$Hit_timer
@@ -80,10 +91,12 @@ var prev_bombing = false
 export var stunned = false
 export var stunned2 = false
 puppet var puppet_motion = Vector2()
+
 #item
 var itemdem = 1
 var itemdem2 = 1
 var itemdem3 = 1
+var danmi =1
 #pac man
 var pacmana= 1
 var rgb =1
@@ -91,7 +104,13 @@ var rgb =1
 onready var bounce_raycasts = $BounceRaycast
 const BOUNCE_VELOCITY = -1000
 onready var audiomenu = $audiomenu
+var player_bullet_instance
+onready var anim = $Node2d/AnimationPlayer
+var xemxetdogiat=1
 func _ready():
+	sprite2.use_parent_material = true
+	sprite3.use_parent_material = true
+	sprite5.visible = false
 	get_tree().connect("network_peer_connected",self,"_network_peer_connected")
 	username_text_instance = Global.instance_node_at_location(username_text, Persistent_nodes, global_position)
 	username_text_instance.player_following =self
@@ -111,6 +130,7 @@ func _ready():
 	Tonghop.tennhanvatset(username)
 	stunned = false
 	stunned2 = false
+	anim.stop()
 func _process(delta: float) -> void:
 	var motion =Vector2()
 	#hp xet
@@ -123,7 +143,7 @@ func _process(delta: float) -> void:
 				#FRICTION = 0 
 				set_rotation(0)
 				if hp>0:
-					$Sprite.hide()
+					node.hide()
 					$ninja.show()
 				gravity = (2*jump_height)/pow(time_jump_apex,2)
 				jump_force = gravity *time_jump_apex
@@ -161,7 +181,7 @@ func _process(delta: float) -> void:
 				set_rotation(0)
 				#velocity.x = Vector2.ZERO
 				if hp>0:
-					$Sprite.hide()
+					node.hide()
 					$plane.show()
 				if eh ==1:
 					gravity = 0
@@ -184,7 +204,7 @@ func _process(delta: float) -> void:
 				velocity = move_and_slide(velocity, Vector2.UP)
 			elif Tonghop.nhanvat == "map1":
 				set_rotation(0)
-				$Sprite.hide()
+				node.hide()
 				$dogy.show()
 				if Input.is_action_pressed("left"):
 					motion += Vector2(-1,0) 
@@ -210,7 +230,7 @@ func _process(delta: float) -> void:
 						$audio2.play()
 			elif Tonghop.nhanvat=="map4":
 				set_rotation(0)
-				$Sprite.hide()
+				node.hide()
 				$bomber.show()
 				if Input.is_action_pressed("left"):
 					motion += Vector2(-1,0)
@@ -257,15 +277,19 @@ func _process(delta: float) -> void:
 					velocity = Vector2.ZERO
 		
 				move_and_slide(velocity * delta)
-					
+				
+							
 				look_at(get_global_mouse_position())
 			# vao trong vong 1 tab
 				if Input.is_action_just_pressed("click") and can_shoot and not is_reloading and $CanvasLayer/menu.visible == false:
-					if loopdamage ==2:
+					xemxetdogiat =2
+					if loopdamage == 2:			
 						dannangcap()
 						dannangcap()
 					else:
 						dannangcap()
+				#if Input.is_action_just_pressed("click2"):
+				#	danmi =2
 				var bombing = Input.is_action_just_pressed("set_bomb")
 				if bombing and not prev_bombing:
 					if itemdem>0 and Tonghop.kiemtramap==2:
@@ -289,30 +313,31 @@ func _process(delta: float) -> void:
 						itemdem3 -= 1
 				if tankdohoa !="2":
 					if hp>200:
-						tankdohoa_set("1")
-					elif hp<100:
-						tankdohoa_set("3")
-				
+						tankdohoa_set("1")		
 		else: # neu chung ta khong phai nguoi choi hien tai (kieu player nay suat hien tren mang kia roi nhung tren mang day no ko phai nguoi choi hien tai cua no thi chi gui thong tin goc di thoi)
+			velocity = puppet_velocity
+			tinhieu = puppet_chet
+			xemxetdogiat = puppet_xemxetdogiat
+			danmi = puppet_dan
 			if Tonghop.nhanvat=="map2":
 				set_rotation(0)
 				if hp>0:
-					$Sprite.hide()
+					node.hide()
 					$ninja.show()
 				velocity = puppet_velocity2
 			if Tonghop.nhanvat == "map3":
 				set_rotation(0)
 				if hp>0:
-					$Sprite.hide()
+					node.hide()
 					$plane.show()
 			if Tonghop.nhanvat == "map4":
 				set_rotation(0)				
-				$Sprite.hide()
+				node.hide()
 				$bomber.show()
 				motion = puppet_motion
 			if Tonghop.nhanvat == "map1":
 				set_rotation(0)	
-				$Sprite.hide()
+				node.hide()
 				$dogy.show()
 				motion = puppet_motion
 			rotation = lerp_angle(rotation,puppet_rotation,delta * 8)	# xac dinh gui thong tin goc quay		
@@ -347,19 +372,47 @@ func _process(delta: float) -> void:
 			$dogy.play("trung")		
 		hp_set(String(hp))
 		
+		if velocity != Vector2.ZERO:
+			sprite2.use_parent_material = false
+			sprite3.use_parent_material = false
+			sprite5.visible = true
+		else:
+			sprite2.use_parent_material = true
+			sprite3.use_parent_material = true
+			sprite5.visible = false
+		if xemxetdogiat ==2:
+			anim.play("giat")
+		if tinhieu ==2:
+			anim.play("phahuy")
+	#
+		if danmi ==3:
+			player_bullet1 = load("res://Playerman/Player_bullet3.tscn")
+		elif danmi ==2:
+			player_bullet1 = load("res://Playerman/Player_bullet2.tscn")
+			
+	#		player_bullet_instance = Global.instance_node_at_location(player_bullet2, Persistent_nodes, shoot_point.global_position)
+		else:
+			player_bullet1 = load("res://Playerman/Player_bullet.tscn")
+	#		player_bullet_instance = Global.instance_node_at_location(player_bullet1, Persistent_nodes, shoot_point.global_position)	
+			
 	if hp<=0:
-		if username_text_instance.visible == true:
-			var explosion_instance = hieuungsauchet.instance()
-			explosion_instance.position = get_global_position()
-			get_tree().get_root().add_child(explosion_instance)
-
-		if username_text_instance != null:
-			username_text_instance.visible = false
-		if hp_instance != null:
-			hp_instance.visible = false
-		if get_tree().has_network_peer():
-			if get_tree().is_network_server():
-				rpc("destroy")
+		#pass
+	#	anim.play("phahuy")
+		if Tonghop.nhanvat == "map3" || Tonghop.nhanvat == "map2" || Tonghop.nhanvat == "map1" || Tonghop.nhanvat =="map4":
+			tuvonggia()
+		else:
+			if visible == true:
+		#	var explosion_instance = hieuungsauchet.instance()
+		#	explosion_instance.position = get_global_position()
+		#	get_tree().get_root().add_child(explosion_instance)
+				tinhieu =2
+	#	if username_text_instance != null:
+	#		username_text_instance.visible = false
+	#	if hp_instance != null:
+	#		hp_instance.visible = false
+	#	if get_tree().has_network_peer():
+	#		if get_tree().is_network_server():
+	#			rpc("destroy")
 	if Input.is_action_pressed("pause"):
 		$CanvasLayer/menu.visible = true
 		
@@ -398,7 +451,7 @@ func username_set(new_value) -> void:
 		if is_network_master() and username_text_instance != null and is_instance_valid(username_text_instance):
 			username_text_instance.text = username
 			rset_config("puppet_username", MultiplayerAPI.RPC_MODE_REMOTESYNC)
-			rset("puppet_username",username)
+		#$	rset("puppet_username",username)
 			#rset("puppet_username",username)
 	
 func puppet_username_set(new_value)-> void:
@@ -412,29 +465,40 @@ func tankdohoa_set(new_value)-> void:
 	if get_tree().has_network_peer():
 		if is_network_master():
 			chuyendoitrangthaitank(tankdohoa)
-			#$Sprite.set_texture(tankdohoa)
 			rset("puppet_tankdohoa",tankdohoa)
 func puppet_tankdohoa_set(new_value)-> void:
 	puppet_tankdohoa = new_value
 	if get_tree().has_network_peer():
 		if not is_network_master():
 			chuyendoitrangthaitank(puppet_tankdohoa)	
-		#	$Sprite.set_texture(puppet_tankdohoa)
+func tuvonggia()-> void:
+		if username_text_instance != null:
+			username_text_instance.visible = false
+		if hp_instance != null:
+			hp_instance.visible = false
+		if get_tree().has_network_peer():
+			if get_tree().is_network_server():
+				rpc("destroy")	
+func powermax()-> void:
+		var explosion_instance = hieuungsauchet.instance()
+		explosion_instance.position = get_global_position()
+		get_tree().get_root().add_child(explosion_instance)
 func chuyendoitrangthaitank(a) -> void:
 	if a=="1":
-		tankdo = preload("res://mapPack/tankaa/tank3-removebg-preview.png")
-		loopdamage = 1
-		checkdamage =1
+		tankdo = preload("res://Playerman/tank_pro/Hulls_Color_B/Hull_02.png")
+		sungdo = preload("res://Playerman/tank_pro/Weapon_Color_B/Gun_06.png")
+		danmi =2
+		checkdamage=1
 	elif a=="2":
-		tankdo = preload("res://mapPack/tankaa/tank1-removebg-preview.png")
-	#	Tonghop.danbanset("dannangcap")
-		loopdamage = 2
-		checkdamage =2
+		tankdo = preload("res://Playerman/tank_pro/Hulls_Color_D/Hull_05.png")
+		sungdo = preload("res://Playerman/tank_pro/Weapon_Color_C/Gun_07.png")
+		danmi =3
+		loopdamage=2
 	elif a=="3":
-		tankdo =preload("res://mapPack/tankaa/tank2-removebg-preview.png")
-		loopdamage = 3
-		checkdamage =3
-	$Sprite.set_texture(tankdo)
+		tankdo =preload("res://Playerman/tank_pro/Hulls_Color_A/Hull_01.png")
+		sungdo = preload("res://Playerman/tank_pro/Weapon_Color_A/Gun_02.png")
+	sprite.set_texture(tankdo)
+	sprite4.set_texture(sungdo)
 #hp
 func hp_set(new_value)-> void:
 	mau = new_value
@@ -455,11 +519,18 @@ func _network_peer_connected(id) -> void:
 func _on_Network_tick_rate_timeout():
 	if get_tree().has_network_peer():
 		if is_network_master():
+			rset_unreliable("puppet_username",username)
 			rset_unreliable("puppet_position", global_position)      # dung de tu xa thay doi bien
 			rset_unreliable("puppet_velocity", velocity) # gui thong tin vi tri cua vat the 
+			rset_unreliable("puppet_chet", tinhieu)
+			rset_unreliable("puppet_dan",danmi)
+			rset_unreliable("puppet_xemxetdogiat",xemxetdogiat)
 			rset_unreliable("puppet_rotation", rotation) # gui goc quay cua vat the di
 sync func instance_bullet(id):
-	var player_bullet_instance = Global.instance_node_at_location(player_bullet, Persistent_nodes, shoot_point.global_position)
+	
+	player_bullet_instance = Global.instance_node_at_location(player_bullet1, Persistent_nodes, shoot_point.global_position)
+#	else:
+		#player_bullet_instance = Global.instance_node_at_location(player_bullet2, Persistent_nodes, shoot_point.global_position)	
 	player_bullet_instance.name = "Bullet" + name +str(Network.networked_object_name_index)
 	player_bullet_instance.set_network_master(id)
 	player_bullet_instance.player_rotation = rotation
@@ -496,7 +567,6 @@ func _on_Hitbox_area_entered(area):
 				rpc("hit_by_damager", damage3)
 			else:
 				rpc("hit_by_damager", area.get_parent().damage)
-			
 			area.get_parent().rpc("destroy")
 	if area.is_in_group("dog"):
 		velocity  = Vector2.UP * 20000
@@ -536,6 +606,7 @@ func _on_Hitbox_area_entered(area):
 		$audio33.play()
 	if area.is_in_group("hieuunggotpowder") and Tonghop.kiemtramap==2:
 			tankdohoa_set("2")
+			
 	if area.is_in_group("thembomb"):
 		$audio33.play()
 		itemdem +=3
@@ -568,11 +639,17 @@ sync func hit_by_damager(damage):
 	
 	
 sync func enable() -> void:
+	tinhieu =1
+	danmi =1
+	itemdem=1
+	itemdem2=1
+	itemdem3=1
 	pacmana = 1
 	hp =100	
+	tankdohoa_set("3")
 	hp_set(String(hp))
 	speed = 150
-	$Sprite.show()
+	node.show()
 	$ninja.hide()
 	$plane.hide()
 	$bomber.hide()
@@ -582,7 +659,7 @@ sync func enable() -> void:
 	username_text_instance.visible = true
 	hp_instance.visible = true
 	visible = true
-	Tonghop.danbanset("danthuong")
+	#Tonghop.danbanset("danthuong")
 	$CollisionShape2D.disabled = false
 	$Hitbox/CollisionShape2D.disabled = false
 	
@@ -611,13 +688,10 @@ func _exit_tree() -> void:
 			Global.player_master = null
 
 func dannangcap() -> void:
-	var bullet_instance = bullet.instance()
-	#bullet_instance.dannhunao="vzvs"
 	rpc("instance_bullet",get_tree().get_network_unique_id())
 	is_reloading = true
 	reload_timer.start()
 	$audio.play()
-
 
 func _on_audio_finished():
 	pass
@@ -652,15 +726,12 @@ func _on_Quit_game_pressed():
 
 func _on_Back_lobby_pressed():
 	audiomenu.play()
-	get_tree().change_scene("res://GUI.tscn")
 	Network.disconnect_server()
+	get_tree().change_scene("res://Scene/GUI.tscn")
 
 
 func _on_chuyenbainen_pressed():
 	audiomenu.play()
-	#var rng = RandomNumberGenerator.new()
-	#rng.randomize()
-#	if rng.randi_range(1,3)==1:
 	match rgb:
 		1:
 			$nhacnen.stream =load("res://music/bells2_1.ogg")
@@ -753,3 +824,13 @@ func _check_bounce(delta):
 				break
 func bounce(bounce_velocity = BOUNCE_VELOCITY):
 	velocity.y = bounce_velocity
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "giat":
+		xemxetdogiat =1
+	if anim_name == "phahuy":
+		tinhieu=1
+		
+		
+	#rset_unreliable("puppet_xemxetdogiat",xemxetdogiat)

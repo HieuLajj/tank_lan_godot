@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Playerman/Player_bullet.gd" type="Script" id=1]
-[ext_resource path="res://mapPack/Laser Sprites/14.png" type="Texture" id=2]
+[ext_resource path="res://mapPack/Interiors_free/Laser Sprites/14.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 58.982, 131.623 )

@@ -53,7 +53,7 @@ func _physics_process(delta):
 		if m==1:
 			$animationhero.play("jump")
 	if Input.is_key_pressed(KEY_ENTER):
-		get_tree().change_scene("res://gameoffline2/mainarmy.tscn")
+		get_tree().change_scene("res://gameoffline2/Scene/mainarmy.tscn")
 	if Input.is_action_just_pressed("click2"):
 		if Global.selected_gun==1:
 			$audio.play()

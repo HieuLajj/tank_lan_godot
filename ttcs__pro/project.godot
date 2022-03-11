@@ -56,10 +56,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Network="*res://Autoload/Network.gd"
 Global="*res://Autoload/Global.gd"
 Persistent_nodes="*res://Autoload/Persistent_nodes.tscn"
 Tonghop="*res://Autoload/tonghop.gd"
+Network="*res://Autoload/Network.gd"
 
 [display]
 

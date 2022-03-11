@@ -1,6 +1,7 @@
+tool
 extends Node
-
-const DEFAULT_PORT = 28960
+#extends Node
+var DEFAULT_PORT = 28960
 const MAX_CLIENTS = 6
 var server = null
 var client = null
@@ -11,7 +12,6 @@ var current_player_username = ""
 var networked_object_name_index = 0 setget networked_object_name_index_set
 puppet var puppet_networked_object_name_index = 0 setget puppet_networked_object_name_index_set
 func _ready() ->void:
-	
 	if OS.get_name() =="Windows":
 		ip_address = IP.get_local_addresses()[3]
 	elif OS.get_name() == "Android":
@@ -19,7 +19,6 @@ func _ready() ->void:
 	else:
 		ip_address = IP.get_local_addresses()[3]
 	print(ip_address)
-
 	for ip in IP.get_local_addresses():
 		if ip.begins_with("192.168.") and not ip.ends_with(".1"):
 			ip_address = ip
@@ -29,7 +28,7 @@ func _ready() ->void:
 
 func create_server() -> void:
 	server = NetworkedMultiplayerENet.new()
-	if server.get_connection_status() != server.CONNECTION_DISCONNECTED:
+	if server.get_connection_status() == server.CONNECTION_DISCONNECTED:
 		server.close_connection(1)
 	server.create_server(DEFAULT_PORT,MAX_CLIENTS)
 	#fix
@@ -47,21 +46,19 @@ func reset_network_connection() -> void:
 		get_tree().network_peer = null
 
 func disconnect_server() -> void:
-	#get_tree().network_peer = null
-	#get_tree().get_network_unique_id()
-	_player_disconnected2(get_tree().get_network_unique_id())
 	if get_tree().is_network_server():
 		server.close_connection(1)
 	for child in Persistent_nodes.get_children():
 		if child.is_in_group("Net"):
 			child.queue_free()
 	get_tree().network_peer = null
+	get_tree().get_network_unique_id()
+	_player_disconnected2(get_tree().get_network_unique_id())
+	get_tree().set_network_peer(null)
 	reset_network_connection()
 func _connected_to_server() -> void:
 	print("ket noi thanh cong")
 func _server_disconnected() -> void:
-	#if get_tree().is_network_server():
-	
 	for child in Persistent_nodes.get_children():
 		if child.is_in_group("Net"):
 			child.queue_free()

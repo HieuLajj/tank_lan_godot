@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://gameoffline2/Script/Bullet.gd" type="Script" id=1]
-[ext_resource path="res://mapPack/Laser Sprites/48.png" type="Texture" id=2]
+[ext_resource path="res://mapPack/Interiors_free/Laser Sprites/48.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 53.3333, 10 )
