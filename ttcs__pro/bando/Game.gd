@@ -102,22 +102,21 @@ sync func switch_to_game5()-> void:
 	$vongtron.play("mms")
 func _on_chuyenmap_timeout():
 	print("chuyenmap")
-	pass
-	#var rng = RandomNumberGenerator.new()
-	#rng.randomize()
-	#var b = rng.randi_range(1,2)
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var b = rng.randi_range(1,2)
 ##	#if rng.randi_range(1,3)==1:
-	#if Global.alive_players.size()==4:
-	#	rpc("switch_to_game5")
+	if Global.alive_players.size()==4:
+		rpc("switch_to_game5")
 #	##	print("10s da troi qua roi em oi")
-	#if Global.alive_players.size()==3:
+	if Global.alive_players.size()==3:
+		if b==1:
+			rpc("switch_to_game3")
+		else:
+			rpc("switch_to_game4")
+	if Global.alive_players.size()==2:
 	#	if b==1:
-	#		rpc("switch_to_game3")
-	#	else:
-	#		rpc("switch_to_game4")
-	#if Global.alive_players.size()==2:
-	#	if b==1:
-	#		rpc("switch_to_game")
+		rpc("switch_to_game")	
 	#	else:
 	#		rpc("switch_to_game2")
 	
@@ -127,7 +126,7 @@ func _on_chuyenmap_timeout():
 
 
 func _on_baocaochuyenmap_timeout():
-#	$TileMap.use_parent_material = false
-#	print("baocao")
+	$TileMap.use_parent_material = false
+	print("baocao")
 
 	pass
